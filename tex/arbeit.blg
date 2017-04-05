@@ -1,0 +1,10 @@
+This is BibTeX, Version 0.99dThe top-level auxiliary file: arbeit.aux
+The style file: geralpha.bst
+I couldn't open database file diplomarbeit.bib
+---line 21 of file arbeit.aux
+ : \bibdata{diplomarbeit
+ :                      }
+I'm skipping whatever remains of this command
+I found no \citation commands---while reading file arbeit.aux
+I found no database files---while reading file arbeit.aux
+(There were 3 error messages)

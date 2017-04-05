@@ -1,0 +1,106 @@
+%% -----------------------------------------------------------------------------------------------------------------------
+%% Diplomarbeit mit LaTeX
+%% -----------------------------------------------------------------------------------------------------------------------
+\documentclass[a4paper, 11pt, twoside, openright, DIV15, BCOR15mm]{scrbook}
+\KOMAoptions{cleardoublepage=empty}
+%
+% Packages
+\usepackage{hanser}
+\usepackage{textcomp}
+\usepackage{listings}
+% Hyperref-Optionen für PDF-Files
+\usepackage{hyperref}
+%% Verhindert Schusterjungen und Hurenkinder
+\clubpenalty = 10000
+\widowpenalty = 10000 \displaywidowpenalty = 10000
+%
+% Kein Einzug beim Paragraphenanfang
+\parindent0.0cm
+\parskip1.5ex
+% Stil für das Literaturverzeichnis
+\bibliographystyle{geralpha}
+% Tiefe für das Inhaltsverzeichnis
+\setcounter{secnumdepth}{2}
+\setcounter{tocdepth}{2}
+% listings-Package
+%+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+%   Hintergrundfarbe von Quellcode
+\definecolor{codecolor}{rgb}{0.85,0.85,0.85}
+\lstloadlanguages{[ANSI]C++, Java}
+\lstset{basicstyle = \ttfamily \small}
+\lstset{backgroundcolor=\color{codecolor}}
+\lstset{extendedchars=true} \lstset{showstringspaces = false}
+% ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+%
+\raggedbottom
+\setlength{\parskip}{2.0ex}
+\setlength{\parindent}{0.0cm}
+%
+% Kopfzeile
+\pagestyle{fancy}
+\renewcommand{\chaptermark}[1]{\markboth{#1}{}}
+\renewcommand{\sectionmark}[1]{\markright{\thesection\ #1}}
+\fancyhf{} \fancyhead[L, RO]{\small \thepage}
+\fancyhead[LO]{\small \nouppercase  \leftmark}
+\fancyhead[RE]{\small \nouppercase \rightmark}
+\fancypagestyle{plain}{%
+   \fancyhead{} %
+   \renewcommand{\headrulewidth}{0pt} %
+}
+%++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+% Abstände zwischen Caption und Bild/Tabelle
+\setlength\abovecaptionskip          {0.4em}
+\setlength\belowcaptionskip          {0.2em}
+%++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+\hypersetup{
+pdftitle = {Beispiel einer Diplomarbeit},
+pdfauthor = {},
+pdfsubject = {Bachelorarbeit, Masterarbeit},
+pdfkeywords = {Bachelorarbeit, Masterarbeit, Fachhochschule Kaiserslautern},
+pdfdisplaydoctitle = true,
+pdfpagelayout = {SinglePage}
+}
+% Anteil der Grafiken höher auf jeder Seite!
+\renewcommand{\floatpagefraction}{0.99}
+% Kein Auseinanderziehen gegen das Seitenende
+\raggedbottom
+%
+% Beginn Dokument
+%
+\begin{document}
+\thispagestyle{empty}
+\title{Beispiel für eine Abschlussarbeit}
+\date{10.~März~2010}
+\author{Manfred Brill}
+\maketitle
+% Inhaltsverzeichnis
+% Schalten Sie auf kleine römische Zahlen als Nummerierung um -- sonst
+% fängt im Inhaltsverzeichnis das erste Kapitel auf Seite 6 an; Seite 1 wäre besser, oder?
+\pagenumbering{roman}
+\tableofcontents
+% Jetzt schalten wir wieder auf arabische Zahlen, und die Zähler werden zurückgesetzt
+\pagenumbering{arabic}
+% Text
+% Verwenden Sie für jedes Kapitel eine eigene Datei. Das macht das Schreiben
+% leichter!
+% Einleitung
+\input{chapters/einleitung}
+% Kapitel 1
+%\input{ehren}
+% Kapitel 2
+%\input{GLSL}
+%
+% Anhang
+%
+\appendix
+% Literatur
+\chaptermark{Literaturverzeichnis}
+\sectionmark{Literaturverzeichnis}
+\addcontentsline{toc}{chapter}{Literaturverzeichnis}
+% Verwenden Sie bibtex!
+\bibliography{diplomarbeit}
+%
+%\input{ehren}
+%
+%\input{sperre}
+\end{document}
