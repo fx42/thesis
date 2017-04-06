@@ -1,4 +1,4 @@
-# Sources and Notes
+# Sources
 ---
 ### Sources
 #### https://www.informatik-aktuell.de/entwicklung/programmiersprachen/reactive-programming-mehr-als-nur-streams-und-lambdas.html
@@ -35,6 +35,9 @@
 #### https://thomasnield.gitbooks.io/rxjavafx-guide/content/2.%20RxJava%20Fundamentals.html
 - Buch zum Mapping
 
+#### https://scholar.google.de/scholar?q=example+application+of+reactive+programming&hl=de&as_sdt=0&as_vis=1&oi=scholart&sa=X&ved=0ahUKEwiK_vuR1Y_TAhULQBQKHXp4CDsQgQMIGDAA
+- google scholar Papers zum Thema
+
 ### Framkeworks
 - Project Reactor 3 https://projectreactor.io/
 - RxJava 2 https://github.com/ReactiveX/RxJava
@@ -42,10 +45,3 @@
 - Reactive Streams(Grundlage der Framkeworks) http://www.reactive-streams.org/
 - Vert.x http://vertx.io/
 - http://reactivex.io/ default
-
-
-### Notes
-- Was ist ein Paradigma -> Fragestellung, ist RP eigentlich ein Paradigma?
-- Was ist ein Stream
-- Was bedeutet Reaktivität, im eigentlichen Sinne und im Kontext
-- Event-Driven-Design was genau bedeutet das
