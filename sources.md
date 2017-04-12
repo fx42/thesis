@@ -38,6 +38,12 @@
 #### https://scholar.google.de/scholar?q=example+application+of+reactive+programming&hl=de&as_sdt=0&as_vis=1&oi=scholart&sa=X&ved=0ahUKEwiK_vuR1Y_TAhULQBQKHXp4CDsQgQMIGDAA
 - google scholar Papers zum Thema
 
+#### https://gist.github.com/staltz/868e7e9bc2a7b8c1f754
+- Quellen in den Kommentaren
+
+#### https://news.ycombinator.com/item?id=7964873
+- Diskussion auf hn
+
 ### Framkeworks
 - Project Reactor 3 https://projectreactor.io/
 - RxJava 2 https://github.com/ReactiveX/RxJava
