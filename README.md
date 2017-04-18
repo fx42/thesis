@@ -10,6 +10,7 @@
   * Was hat Reactive Programming mit Functional Reactive Programming gemein
   * Vergleich und Auflistung von Framkeworks für unterschiedliche Programmiersprachen
   * Spezielle Framkeworks für die Entwicklung unter Java, Bezug auf JavaFX
+  * Testing mit JUnit
 3. Anwendung anhand eines Beispiels in Java
   * Funktionale Beschreibung der Anwendung
   * Einführung RxJava und RxJavaFX
