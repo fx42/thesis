@@ -12,6 +12,7 @@ import oshi.SystemInfo;
 import oshi.hardware.CentralProcessor;
 import oshi.hardware.GlobalMemory;
 import oshi.hardware.HardwareAbstractionLayer;
+import oshi.software.os.OperatingSystem.ProcessSort;
 
 public class Provider
 {
@@ -22,6 +23,7 @@ public class Provider
 
 	public static ObservableList< Data< String, Number > > cpuUsage = FXCollections.observableArrayList();
 	public static ObservableList< PieChart.Data > ramUsage = FXCollections.observableArrayList();
+	public static ObservableList< String > activeProcesses = FXCollections.observableArrayList();
 
 	public static void fetchCPUdata()
 	{
@@ -48,5 +50,13 @@ public class Provider
 			ramUsage.get( 0 ).setPieValue( ram.getAvailable() );
 			ramUsage.get( 1 ).setPieValue( ram.getTotal() - ram.getAvailable() );
 		} );
+	}
+
+	// TODO
+	public static void fetchActiveProcesses()
+	{
+		Observable.interval( 10, TimeUnit.MILLISECONDS, JavaFxScheduler.platform() )
+				.fromArray( sysinf.getOperatingSystem().getProcesses( 0, ProcessSort.CPU ) ).retry()
+				.subscribe( s -> activeProcesses.addAll( s.getName() ) );
 	}
 }

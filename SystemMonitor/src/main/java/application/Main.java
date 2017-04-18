@@ -9,6 +9,7 @@ import javafx.scene.chart.NumberAxis;
 import javafx.scene.chart.PieChart;
 import javafx.scene.chart.XYChart;
 import javafx.scene.chart.XYChart.Series;
+import javafx.scene.control.ListView;
 import javafx.scene.layout.HBox;
 import javafx.stage.Stage;
 import provider.Provider;
@@ -41,6 +42,11 @@ public class Main extends Application
 		JavaFxObservable.emitOnChanged( Provider.cpuUsage ).subscribe( s -> chartSeries.setData( s ) );
 		bc.getData().addAll( chartSeries );
 
+		// Create Listview with all processes
+		ListView< String > processList = new ListView<>();
+		Provider.fetchActiveProcesses();
+		JavaFxObservable.emitOnChanged( Provider.activeProcesses ).subscribe( s -> processList.setItems( s ) );
+
 		// Create Piechart and start fetching data
 		PieChart pieChart = new PieChart();
 		pieChart.setLegendVisible( false );
@@ -48,7 +54,7 @@ public class Main extends Application
 		JavaFxObservable.emitOnChanged( Provider.ramUsage ).subscribe( s -> pieChart.setData( s ) );
 
 		// Add series to barchart, add barchart to root element and show scene
-		root.getChildren().setAll( bc, pieChart );
+		root.getChildren().setAll( bc, processList, pieChart );
 		primaryStage.setScene( new Scene( root, 800, 600 ) );
 		primaryStage.show();
 
