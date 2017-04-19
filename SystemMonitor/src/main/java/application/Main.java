@@ -1,6 +1,7 @@
 package application;
 
 import io.reactivex.rxjavafx.observables.JavaFxObservable;
+import io.reactivex.rxjavafx.schedulers.JavaFxScheduler;
 import javafx.application.Application;
 import javafx.scene.Scene;
 import javafx.scene.chart.BarChart;
@@ -39,19 +40,23 @@ public class Main extends Application
 		// valueList from the provider
 		Series< String, Number > chartSeries = new XYChart.Series<>();
 		Provider.fetchCPUdata();
-		JavaFxObservable.emitOnChanged( Provider.cpuUsage ).subscribe( s -> chartSeries.setData( s ) );
+		JavaFxObservable.emitOnChanged( Provider.cpuUsage ).observeOn( JavaFxScheduler.platform() )
+				.subscribe( s -> chartSeries.setData( s ) );
 		bc.getData().addAll( chartSeries );
 
 		// Create Listview with all processes
 		ListView< String > processList = new ListView<>();
+		processList.setMinWidth( 200 );
 		Provider.fetchActiveProcesses();
-		JavaFxObservable.emitOnChanged( Provider.activeProcesses ).subscribe( s -> processList.setItems( s ) );
+		JavaFxObservable.emitOnChanged( Provider.activeProcesses ).observeOn( JavaFxScheduler.platform() )
+				.subscribe( s -> processList.setItems( s ) );
 
 		// Create Piechart and start fetching data
 		PieChart pieChart = new PieChart();
 		pieChart.setLegendVisible( false );
 		Provider.fetchRAMdata();
-		JavaFxObservable.emitOnChanged( Provider.ramUsage ).subscribe( s -> pieChart.setData( s ) );
+		JavaFxObservable.emitOnChanged( Provider.ramUsage ).observeOn( JavaFxScheduler.platform() )
+				.subscribe( s -> pieChart.setData( s ) );
 
 		// Add series to barchart, add barchart to root element and show scene
 		root.getChildren().setAll( bc, processList, pieChart );

@@ -35,6 +35,9 @@
 #### https://thomasnield.gitbooks.io/rxjavafx-guide/content/2.%20RxJava%20Fundamentals.html
 - Buch zum Mapping
 
+#### http://blog.danlew.net/2014/09/22/grokking-rxjava-part-2/
+- Gute Erklärung flatmap
+
 #### https://scholar.google.de/scholar?q=example+application+of+reactive+programming&hl=de&as_sdt=0&as_vis=1&oi=scholart&sa=X&ved=0ahUKEwiK_vuR1Y_TAhULQBQKHXp4CDsQgQMIGDAA
 - google scholar Papers zum Thema
 
@@ -43,6 +46,18 @@
 
 #### https://news.ycombinator.com/item?id=7964873
 - Diskussion auf hn
+
+#### http://notes.lucida.me/2016/11/09/rp-with-rxjava-7/
+- About testing
+
+#### https://www.infoq.com/articles/Testing-RxJava2
+- About testing
+
+#### http://www.vogella.com/tutorials/RxJava/article.html
+- Tutorial
+
+#### http://download.java.net/java/jdk9/docs/api/index.html?java/util/concurrent/Flow.html
+- Java 9 Flow API für reactive Streams
 
 ### Framkeworks
 - Project Reactor 3 https://projectreactor.io/
