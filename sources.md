@@ -59,6 +59,10 @@
 #### http://download.java.net/java/jdk9/docs/api/index.html?java/util/concurrent/Flow.html
 - Java 9 Flow API für reactive Streams
 
+#### https://dotboris.github.io/2017/04/07/functional-programming/
+- Erklärung functional-programming
+
+
 ### Framkeworks
 - Project Reactor 3 https://projectreactor.io/
 - RxJava 2 https://github.com/ReactiveX/RxJava
