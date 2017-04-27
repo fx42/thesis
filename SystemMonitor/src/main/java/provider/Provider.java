@@ -13,6 +13,7 @@ import oshi.SystemInfo;
 import oshi.hardware.CentralProcessor;
 import oshi.hardware.GlobalMemory;
 import oshi.hardware.HardwareAbstractionLayer;
+import oshi.software.os.OSProcess;
 
 public class Provider
 {
@@ -23,7 +24,7 @@ public class Provider
 
 	public static ObservableList< Data< String, Number > > cpuUsage = FXCollections.observableArrayList();
 	public static ObservableList< PieChart.Data > ramUsage = FXCollections.observableArrayList();
-	public static ObservableList< String > activeProcesses = FXCollections.observableArrayList();
+	public static ObservableList< OSProcess > activeProcesses = FXCollections.observableArrayList();
 	public static Observable< Long > tick = Observable.interval( 10, TimeUnit.MILLISECONDS )
 			.subscribeOn( Schedulers.computation() );
 
@@ -34,7 +35,7 @@ public class Provider
 			cpuUsage.add( new Data<>( "CPU" + i, 0 ) );
 		}
 
-		Observable.interval( 10, TimeUnit.MILLISECONDS ).subscribeOn( Schedulers.computation() )
+		Observable.interval( 1_000_000 / 60, TimeUnit.MICROSECONDS ).subscribeOn( Schedulers.computation() )
 				.map( i -> processor.getProcessorCpuLoadBetweenTicks() ).retry().observeOn( JavaFxScheduler.platform() )
 				.subscribe( s -> {
 					for ( int i = 0; i < cpuUsage.size(); i++ )
@@ -49,34 +50,22 @@ public class Provider
 		ramUsage.add( new PieChart.Data( "available", 0 ) );
 		ramUsage.add( new PieChart.Data( "in use", 0 ) );
 
-		Observable.interval( 10, TimeUnit.MILLISECONDS ).subscribeOn( Schedulers.computation() ).retry()
+		Observable.interval( 1_000_000 / 60, TimeUnit.MICROSECONDS ).subscribeOn( Schedulers.computation() ).retry()
 				.observeOn( JavaFxScheduler.platform() ).subscribe( s -> {
 					ramUsage.get( 0 ).setPieValue( ram.getAvailable() );
 					ramUsage.get( 1 ).setPieValue( ram.getTotal() - ram.getAvailable() );
 				} );
 	}
 
-	// TODO
 	public static void fetchActiveProcesses()
 	{
-		// Observable.interval( 10, TimeUnit.MILLISECONDS,
-		// JavaFxScheduler.platform() )
-		// .map( s -> Arrays.asList( sysinf.getOperatingSystem().getProcesses(
-		// 32, ProcessSort.CPU ) ).stream() ).subscribe(s -> s.)
-
-	}
-
-	public static void fetchCPUdata_2()
-	{
-		for ( int i = 0; i < processor.getLogicalProcessorCount(); i++ )
-		{
-			cpuUsage.add( new Data<>( "CPU" + i, 0 ) );
-		}
-
 		// Observable.interval( 10, TimeUnit.MILLISECONDS ).subscribeOn(
-		// Schedulers.computation() )
-		// .map( i -> processor.getProcessorCpuLoadBetweenTicks() ).flatMap(
-		// Observable::fromArray );
+		// Schedulers.computation() ).retry()
+		// .map( s -> Arrays.asList( sysinf.getOperatingSystem().getProcesses(
+		// 32, ProcessSort.CPU ) ) )
+		// .observeOn( JavaFxScheduler.platform() )
+		// .subscribe( s -> activeProcesses = FXCollections.observableArrayList(
+		// s ) );
 
 	}
 }
