@@ -30,9 +30,15 @@ import javafx.scene.layout.HBox;
 import javafx.stage.Stage;
 import provider.SystemProvider;
 
+
 public class Main2 extends Application
 {
 
+	public static void main(String[] args) 
+	{
+        Application.launch(args);
+    }
+	
 	@Override
 	public void start( Stage primaryStage ) throws Exception
 	{
@@ -72,7 +78,7 @@ public class Main2 extends Application
 		for ( Entry< String, Observable< Double > > entry : resultMap.entrySet() )
 		{
 			listOfData.add( new XYChart.Data< String, Number >( entry.getKey(),
-					entry.getValue().blockingNext().iterator().next() ) );
+					entry.getValue().blockingNext().iterator().next()*100 ) );
 
 		}
 
@@ -80,8 +86,8 @@ public class Main2 extends Application
 		JavaFxObservable.emitOnChanged( listOfData ).observeOn( JavaFxScheduler.platform() ).retry().map( s -> {
 			System.out.println( s );
 			return s;
-		} ).subscribe( s -> chartSeries.setData( s ) );
-		bc.getData().add( chartSeries );
+		} ).subscribe( s -> {chartSeries.setData( s );bc.getData().add( chartSeries );} );
+		
 		return bc;
 
 	}
