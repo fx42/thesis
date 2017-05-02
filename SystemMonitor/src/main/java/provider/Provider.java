@@ -34,7 +34,6 @@ public class Provider
 		{
 			cpuUsage.add( new Data<>( "CPU" + i, 0 ) );
 		}
-
 		Observable.interval( 1_000_000 / 60, TimeUnit.MICROSECONDS ).subscribeOn( Schedulers.computation() )
 				.map( i -> processor.getProcessorCpuLoadBetweenTicks() ).retry().observeOn( JavaFxScheduler.platform() )
 				.subscribe( s -> {
@@ -52,8 +51,9 @@ public class Provider
 
 		Observable.interval( 1_000_000 / 60, TimeUnit.MICROSECONDS ).subscribeOn( Schedulers.computation() ).retry()
 				.observeOn( JavaFxScheduler.platform() ).subscribe( s -> {
-					ramUsage.get( 0 ).setPieValue( ram.getAvailable() );
-					ramUsage.get( 1 ).setPieValue( ram.getTotal() - ram.getAvailable() );
+					ramUsage.get( 0 ).setPieValue( Runtime.getRuntime().freeMemory() );
+					ramUsage.get( 1 )
+							.setPieValue( Runtime.getRuntime().totalMemory() - Runtime.getRuntime().freeMemory() );
 				} );
 	}
 

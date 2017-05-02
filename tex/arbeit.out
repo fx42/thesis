@@ -1,2 +1,38 @@
 \BOOKMARK [0][-]{chapter.1}{Einleitung}{}% 1
-\BOOKMARK [0][-]{chapter.1}{Literaturverzeichnis}{}% 2
+\BOOKMARK [0][-]{chapter.2}{Was ist Reactive Programming}{}% 2
+\BOOKMARK [1][-]{section.2.1}{Reactive Programming - Ein neues Programmierparadigma?}{chapter.2}% 3
+\BOOKMARK [2][-]{subsection.2.1.1}{Was versteht man unter Programmierparadigmen}{section.2.1}% 4
+\BOOKMARK [2][-]{subsection.2.1.2}{Vergleich: Reactive Programming und Objekt orientierte Programmierung}{section.2.1}% 5
+\BOOKMARK [1][-]{section.2.2}{F\303\274r was steht das Reactive im Kontext der Programmierung}{chapter.2}% 6
+\BOOKMARK [2][-]{subsection.2.2.1}{Differenzierung zwischen Reactive Proramming und Reactive Systems}{section.2.2}% 7
+\BOOKMARK [1][-]{section.2.3}{Reactive Programming vs. Functional Reactive Programming}{chapter.2}% 8
+\BOOKMARK [1][-]{section.2.4}{\303berblick \303\274ber bekannte Frameworks und ihre Eigenschaften}{chapter.2}% 9
+\BOOKMARK [2][-]{subsection.2.4.1}{Reactivex.io}{section.2.4}% 10
+\BOOKMARK [2][-]{subsection.2.4.2}{Allgemeine \303bersicht}{section.2.4}% 11
+\BOOKMARK [2][-]{subsection.2.4.3}{\303bersicht spezielle f\303\274r die Entwicklung mit Java}{section.2.4}% 12
+\BOOKMARK [1][-]{section.2.5}{Testen von reaktivem Code mit dem JUnit Framework}{chapter.2}% 13
+\BOOKMARK [0][-]{chapter.3}{Einf\303\274hrung in Reactive Programming mit RxJava}{}% 14
+\BOOKMARK [1][-]{section.3.1}{Wie funktioniert Reactive Programming}{chapter.3}% 15
+\BOOKMARK [2][-]{subsection.3.1.1}{Syncronit\303\244t}{section.3.1}% 16
+\BOOKMARK [2][-]{subsection.3.1.2}{Parallelisierung}{section.3.1}% 17
+\BOOKMARK [2][-]{subsection.3.1.3}{Push vs. Pull}{section.3.1}% 18
+\BOOKMARK [1][-]{section.3.2}{Rx.Observable}{chapter.3}% 19
+\BOOKMARK [1][-]{section.3.3}{Rx.Observer}{chapter.3}% 20
+\BOOKMARK [2][-]{subsection.3.3.1}{Rx.Subscriber}{section.3.3}% 21
+\BOOKMARK [1][-]{section.3.4}{Operationen und Transformationen}{chapter.3}% 22
+\BOOKMARK [2][-]{subsection.3.4.1}{Exkursion: Streams API Java 8}{section.3.4}% 23
+\BOOKMARK [2][-]{subsection.3.4.2}{Operation filter\(\)}{section.3.4}% 24
+\BOOKMARK [2][-]{subsection.3.4.3}{Transformation map\(\)}{section.3.4}% 25
+\BOOKMARK [2][-]{subsection.3.4.4}{Transformation flatMap\(\)}{section.3.4}% 26
+\BOOKMARK [2][-]{subsection.3.4.5}{Operation merge\(\)}{section.3.4}% 27
+\BOOKMARK [2][-]{subsection.3.4.6}{Operation zip\(\)}{section.3.4}% 28
+\BOOKMARK [0][-]{chapter.4}{Beispiel: Implementierung eines Systemmonitors}{}% 29
+\BOOKMARK [1][-]{section.4.1}{API f\303\274r Systemwerte}{chapter.4}% 30
+\BOOKMARK [2][-]{subsection.4.1.1}{Beschreibung Klasse 1}{section.4.1}% 31
+\BOOKMARK [2][-]{subsection.4.1.2}{Beschreibung Klasse 2}{section.4.1}% 32
+\BOOKMARK [2][-]{subsection.4.1.3}{Beschreibung Klasse 3}{section.4.1}% 33
+\BOOKMARK [2][-]{subsection.4.1.4}{Beschreibung Klasse 4}{section.4.1}% 34
+\BOOKMARK [1][-]{section.4.2}{Client f\303\274r API: GUI zur Repr\303\244sentation der Systemwerte}{chapter.4}% 35
+\BOOKMARK [2][-]{subsection.4.2.1}{Beschreibung Klasse 1}{section.4.2}% 36
+\BOOKMARK [2][-]{subsection.4.2.2}{Beschreibung Klasse 2}{section.4.2}% 37
+\BOOKMARK [0][-]{subsection.4.2.2}{Literaturverzeichnis}{}% 38

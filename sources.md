@@ -70,3 +70,6 @@
 - Reactive Streams(Grundlage der Framkeworks) http://www.reactive-streams.org/
 - Vert.x http://vertx.io/
 - http://reactivex.io/ default
+
+### Latex Template
+https://github.com/latextemplates/scientific-thesis-template

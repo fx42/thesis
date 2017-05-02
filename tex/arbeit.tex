@@ -5,10 +5,13 @@
 \KOMAoptions{cleardoublepage=empty}
 %
 % Packages
+%\usepackage[utf8]{inputenc}
+%\usepackage[german]{babel} % this is needed for umlauts
+%\usepackage[T1]{fontenc} 
 \usepackage{hanser}
 \usepackage{textcomp}
 \usepackage{listings}
-% Hyperref-Optionen für PDF-Files
+% Hyperref-Optionen fï¿½r PDF-Files
 \usepackage{hyperref}
 %% Verhindert Schusterjungen und Hurenkinder
 \clubpenalty = 10000
@@ -17,9 +20,9 @@
 % Kein Einzug beim Paragraphenanfang
 \parindent0.0cm
 \parskip1.5ex
-% Stil für das Literaturverzeichnis
+% Stil fï¿½r das Literaturverzeichnis
 \bibliographystyle{geralpha}
-% Tiefe für das Inhaltsverzeichnis
+% Tiefe fï¿½r das Inhaltsverzeichnis
 \setcounter{secnumdepth}{2}
 \setcounter{tocdepth}{2}
 % listings-Package
@@ -48,7 +51,7 @@
    \renewcommand{\headrulewidth}{0pt} %
 }
 %++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
-% Abstände zwischen Caption und Bild/Tabelle
+% Abstï¿½nde zwischen Caption und Bild/Tabelle
 \setlength\abovecaptionskip          {0.4em}
 \setlength\belowcaptionskip          {0.2em}
 %++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
@@ -60,7 +63,7 @@ pdfkeywords = {Bachelorarbeit, Masterarbeit, Fachhochschule Kaiserslautern},
 pdfdisplaydoctitle = true,
 pdfpagelayout = {SinglePage}
 }
-% Anteil der Grafiken höher auf jeder Seite!
+% Anteil der Grafiken hï¿½her auf jeder Seite!
 \renewcommand{\floatpagefraction}{0.99}
 % Kein Auseinanderziehen gegen das Seitenende
 \raggedbottom
@@ -69,26 +72,28 @@ pdfpagelayout = {SinglePage}
 %
 \begin{document}
 \thispagestyle{empty}
-\title{Beispiel für eine Abschlussarbeit}
-\date{10.~März~2010}
+\title{Beispiel fï¿½r eine Abschlussarbeit}
+\date{10.~Mï¿½rz~2010}
 \author{Manfred Brill}
 \maketitle
 % Inhaltsverzeichnis
-% Schalten Sie auf kleine römische Zahlen als Nummerierung um -- sonst
-% fängt im Inhaltsverzeichnis das erste Kapitel auf Seite 6 an; Seite 1 wäre besser, oder?
+% Schalten Sie auf kleine rï¿½mische Zahlen als Nummerierung um -- sonst
+% fï¿½ngt im Inhaltsverzeichnis das erste Kapitel auf Seite 6 an; Seite 1 wï¿½re besser, oder?
 \pagenumbering{roman}
 \tableofcontents
-% Jetzt schalten wir wieder auf arabische Zahlen, und die Zähler werden zurückgesetzt
+% Jetzt schalten wir wieder auf arabische Zahlen, und die Zï¿½hler werden zurï¿½ckgesetzt
 \pagenumbering{arabic}
 % Text
-% Verwenden Sie für jedes Kapitel eine eigene Datei. Das macht das Schreiben
+% Verwenden Sie fï¿½r jedes Kapitel eine eigene Datei. Das macht das Schreiben
 % leichter!
 % Einleitung
 \input{chapters/einleitung}
 % Kapitel 1
-%\input{ehren}
+\input{chapters/was_ist_reactive_programming}
 % Kapitel 2
-%\input{GLSL}
+\input{chapters/rp_einfuehrung}
+% Kapitel 3
+\input{chapters/beispiel_implementierung}
 %
 % Anhang
 %

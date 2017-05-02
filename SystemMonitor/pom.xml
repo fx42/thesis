@@ -30,7 +30,7 @@
     <groupId>com.github.dblock</groupId>
     <artifactId>oshi-core</artifactId>
     <version>3.4.0</version>
-</dependency>
+  </dependency>
 <dependency>
 <groupId>com.oracle</groupId>
 <artifactId>javafx</artifactId>
