@@ -72,7 +72,7 @@
 - http://reactivex.io/ default
 
 ### Latex Template
-https://github.com/latextemplates/scientific-thesis-template
+https://github.com/iNeedCode/latex_template HS Darmstadt
 
 ### https://www.infoq.com/presentations/Netflix-API-rxjava-hystrix/
 Presentation Ben Christensen
