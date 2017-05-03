@@ -1,7 +1,6 @@
 package application;
 
-import java.util.Map;
-import java.util.Map.Entry;
+import java.util.List;
 
 import io.reactivex.Observable;
 import io.reactivex.Observer;
@@ -24,37 +23,32 @@ import javafx.scene.chart.PieChart;
 import javafx.scene.chart.PieChart.Data;
 import javafx.scene.chart.XYChart;
 import javafx.scene.chart.XYChart.Series;
-import javafx.scene.control.Label;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
 import javafx.stage.Stage;
 import provider.SystemProvider;
 
-
-public class Main2 extends Application
+public class MainApplication extends Application
 {
 
-	public static void main(String[] args) 
+	public static void main( String[] args )
 	{
-        Application.launch(args);
-    }
-	
+		Application.launch( args );
+	}
+
 	@Override
 	public void start( Stage primaryStage ) throws Exception
 	{
 		BorderPane root = new BorderPane();
-		Label label = new Label( "A start button will be placed here" );
 		HBox hBox = new HBox( 10 );
 		hBox.setPadding( new Insets( 7, 7, 7, 7 ) );
 		hBox.setAlignment( Pos.BASELINE_LEFT );
 		hBox.getChildren().setAll( createBarChart(), createPieChart() );
 
-		root.setTop( label );
-		BorderPane.setAlignment( label, Pos.TOP_CENTER );
 		root.setLeft( hBox );
 		primaryStage.setTitle( "System Monitor" );
 		primaryStage.setResizable( true );
-		primaryStage.setScene( new Scene( root, 1200, 400 ) );
+		primaryStage.setScene( new Scene( root, 1000, 400 ) );
 		primaryStage.show();
 
 	}
@@ -73,41 +67,47 @@ public class Main2 extends Application
 		bc.setLegendVisible( false );
 		bc.setCategoryGap( 10 );
 
-		Map< String, Observable< Double > > resultMap = provider.getCpuUsage();
 		ObservableList< XYChart.Data< String, Number > > listOfData = FXCollections.observableArrayList();
-		for ( Entry< String, Observable< Double > > entry : resultMap.entrySet() )
+
+		for ( int i = 0; i < provider.getCpuAmount(); i++ )
 		{
-			listOfData.add( new XYChart.Data< String, Number >( entry.getKey(),
-					entry.getValue().blockingNext().iterator().next()*100 ) );
+			listOfData.add( new XYChart.Data< String, Number >( "CPU" + i, 0 ) );
 
 		}
 
+		List< Observable< Double > > list = provider.fetchCpuValues();
 		Series< String, Number > chartSeries = new XYChart.Series<>();
-		JavaFxObservable.emitOnChanged( listOfData ).observeOn( JavaFxScheduler.platform() ).retry().map( s -> {
-			System.out.println( s );
-			return s;
-		} ).subscribe( s -> {chartSeries.setData( s );bc.getData().add( chartSeries );} );
-		
+
+		for ( int i = 0; i < list.size(); i++ )
+		{
+			changeOnList( listOfData, list.get( i ), i );
+			System.err.println( "list: " + listOfData.toString() + ", listitem: " + list.get( i ) + "index: " + i );
+			chartSeries.getData().add( listOfData.get( i ) );
+		}
+
+		bc.getData().add( chartSeries );
 		return bc;
 
 	}
 
-	private static Observer< Double > getCpuObserver( int index )
+	private static void changeOnList( ObservableList< XYChart.Data< String, Number > > list, Observable< Double > value,
+			int index )
 	{
-		SystemProvider provider = SystemProvider.getInstance();
-		return new Observer< Double >()
+		Observer< Double > observer = new Observer< Double >()
 		{
+
 			@Override
 			public void onSubscribe( Disposable d )
 			{
-				// Not necessary
+				// TODO Auto-generated method stub
 
 			}
 
 			@Override
 			public void onNext( Double t )
 			{
-				provider.getCpuUsage().get( index );
+				list.get( index ).setYValue( t * 100 );
+				System.out.println( index + " " + t * 100 + "\n --------------------------" );
 			}
 
 			@Override
@@ -120,10 +120,11 @@ public class Main2 extends Application
 			@Override
 			public void onComplete()
 			{
-				// Should never complete
+				// TODO Auto-generated method stub
 
 			}
 		};
+		value.observeOn( Schedulers.computation() ).retry().subscribe( observer );
 	}
 
 	private static Node createPieChart()

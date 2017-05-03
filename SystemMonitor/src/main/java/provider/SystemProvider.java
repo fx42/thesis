@@ -1,6 +1,8 @@
 package provider;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.concurrent.TimeUnit;
 
@@ -46,8 +48,21 @@ public class SystemProvider implements ISystemProvider
 			int j = i;
 			resultMap.put( "CPU" + i, Observable.interval( 1, TimeUnit.SECONDS, Schedulers.computation() )
 					.map( tmp -> processor.getProcessorCpuLoadBetweenTicks()[ j ] ) );
+
 		}
 		return resultMap;
+	}
+
+	public List< Observable< Double > > fetchCpuValues()
+	{
+		List< Observable< Double > > resultList = new ArrayList<>();
+		for ( int i = 0; i < cpuAmount; i++ )
+		{
+			int j = i;
+			resultList.add( Observable.interval( 1, TimeUnit.SECONDS, Schedulers.computation() )
+					.map( tmp -> processor.getProcessorCpuLoadBetweenTicks()[ j ] ) );
+		}
+		return resultList;
 	}
 
 	@Override
