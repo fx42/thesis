@@ -76,3 +76,12 @@ https://github.com/iNeedCode/latex_template HS Darmstadt
 
 ### https://www.infoq.com/presentations/Netflix-API-rxjava-hystrix/
 Presentation Ben Christensen
+
+### https://github.com/ruler88/GithubDemo
+Beispiel Rest API mit Observables
+
+### http://openjdk.java.net/jeps/266
+official jep für flow APi Java 9
+
+### https://prezi.com/
+Online Tool für Präsentationen - vlt. für Kolo
