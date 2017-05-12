@@ -2,15 +2,15 @@
 
 %----------------- PDF CONFIG ----------------- %
 \pdfinfo{    
-     /Title (PDF-Titel) 
-     /Subject   (PDF-Thema)    
-     /Author  (Vorname Nachname) 
-     /Keywords   (Stichwort1,Stichwort2)      
+     /Title (Bachelorthesis) 
+     /Subject   (Reactive Programming)    
+     /Author  (Felix Scheidel) 
+     /Keywords   (Java 8, Reactive Programming, Functional Reactive Programming, RxJava, RxJavaFx)      
 } 
 
-\title{MyTitle}
-\author{theAuthor}
-\date{1.1.2000}
+\title{Reactive Programming}
+\author{Felix Scheidel}
+\date{\date{today}}
 
 
 
@@ -71,22 +71,6 @@
 %----------------- VERZEICHNISSE -----------------%
 \tableofcontents % Inhaltverzeichnis
 
-% ----- Abbildungen ----- %
-%\addcontentsline{toc}{section}{Abbildungsverzeichnis} % falls in Inhalsverzeichnis
-\listoffigures
-
-% ----- Tabellen----- %
-% \addcontentsline{toc}{section}{Tabellenverzeichnis}  % falls in Inhalsverzeichnis
-% \fancyhead[L]{Abbildungsverzeichnis / Abkürzungsverzeichnis} %Kopfzeile links
-\listoftables
-
-% ----- Listings ----- %
-% Listingverzeichnis soll im Inhaltsverzeichnis auftauchen
-% \addcontentsline{toc}{section}{Listingverzeichnis}
-% \fancyhead[L]{Abbildungs- / Tabellen- / Listingverzeichnis} %Kopfzeile links
-\renewcommand{\lstlistlistingname}{Listingverzeichnis}
-\lstlistoflistings
-
 \pagestyle{plain} % zurueck setzen von roemische seitenanzahl
 
 
@@ -103,6 +87,20 @@
 \bibliography{literatur}
 \pagenumbering{Roman}	
 	
+% ----- Abbildungen ----- %
+%\addcontentsline{toc}{section}{Abbildungsverzeichnis} % falls in Inhalsverzeichnis
+\listoffigures
 
+% ----- Tabellen----- %
+% \addcontentsline{toc}{section}{Tabellenverzeichnis}  % falls in Inhalsverzeichnis
+% \fancyhead[L]{Abbildungsverzeichnis / Abkürzungsverzeichnis} %Kopfzeile links
+\listoftables
+
+% ----- Listings ----- %
+% Listingverzeichnis soll im Inhaltsverzeichnis auftauchen
+% \addcontentsline{toc}{section}{Listingverzeichnis}
+% \fancyhead[L]{Abbildungs- / Tabellen- / Listingverzeichnis} %Kopfzeile links
+\renewcommand{\lstlistlistingname}{Listingverzeichnis}
+\lstlistoflistings
 	
 \end{document}
