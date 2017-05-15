@@ -85,3 +85,6 @@ official jep für flow APi Java 9
 
 ### https://prezi.com/
 Online Tool für Präsentationen - vlt. für Kolo
+
+### https://martinfowler.com/bliki/InversionOfControl.html
+Eerklärung IoC bzgl komplexität von seuqentieller Programmierung
