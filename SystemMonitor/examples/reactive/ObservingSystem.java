@@ -1,3 +1,4 @@
+package reactive;
 // package examples;
 //
 // import java.util.concurrent.TimeUnit;
@@ -31,7 +32,7 @@
 // public void start( Stage primaryStage ) throws Exception
 // {
 // VBox root = new VBox();
-// Label label = new Label( "Verfügbarer Arbeitspeicher" );
+// Label label = new Label( "Verfï¿½gbarer Arbeitspeicher" );
 // Label ram = new Label();
 //
 // final CategoryAxis xAxis = new CategoryAxis();
