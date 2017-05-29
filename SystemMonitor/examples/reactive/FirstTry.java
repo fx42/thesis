@@ -1,4 +1,4 @@
-package examples;
+package reactive;
 
 import io.reactivex.Observable;
 import io.reactivex.rxjavafx.observables.JavaFxObservable;
