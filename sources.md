@@ -88,3 +88,6 @@ Online Tool für Präsentationen - vlt. für Kolo
 
 ### https://martinfowler.com/bliki/InversionOfControl.html
 Eerklärung IoC bzgl komplexität von seuqentieller Programmierung
+
+### https://www.youtube.com/watch?v=WKore-AkisY
+Erik Meijer Video Beispiel mit FX Java

@@ -1,13 +1,24 @@
-\chapter{Einführung in Reactive Programming mit RxJava}\label{rp_einfuehrung}
-Beschreibung wieso RxJava. Beschreibung was beschrieben wird.
-\section{Wie funktioniert Reactive Programming}
-Einleitung zum Aufbau: Klassenübersicht des Frameworks mit Erklärung. 
-\subsection{Syncronität}
+\chapter{Einführung in Reactive Programming mit RxJava2}\label{rp_einfuehrung}
+Der zentrale Baustein dieser Bibliothek ist die Klasse Observable im Zusammenspiel mit der Observer-Klasse. Ein Observable repräsentiert eine Daten- beziehungsweise Ereignisstrom. Es ist für das push-Verfahren konzipiert (reaktiv) kann aber auch mit dem pull-Vorgehen verwendet werden (interaktiv)\footnote{Vgl. \cite{Nurkiewicz.2017}, Seite 4.}. Weitere Eigenschaften sind die Nutzung für asynchrone und synchrone Implementierungen und die Repräsentation von 0 bis $\infty$ viele Werte im Laufe der Zeit. Es folgt nun eine kurze Schilderung wie diese Eigenschaften erreicht werden bevor die eigentlichen Struktur der Bibliothek veranschaulicht wird. Diese Eigenschaften wurden vom bereits erwähnten Ben Christensen in Kapitel 1 innerhalb des Buches von Tomasz Nurkiewicz \footnote{\cite{Nurkiewicz.2017}} beschrieben.
+\section{Synchronität und Asynchronität}
 Sync vs. Async - was bringt RP in dieser Hinsicht
-\subsection{Parallelisierung}
+\subsection{Parallelisierung und Nebenläufigkeit}
 Concurrency vs. Parallelism - was tritt wie wann auf bzw. kann wie wann angewandt werden
-\subsection{Push vs. Pull}
-Wichtigster Unteschied. Observable als Gegenpart zu Interable - somit Push vs. Pull Vergleich.
+\subsection{Push und Pull}
+Wird synchrones Pulling von Objekten einer Liste mit der Iterable-Schnittstelle durchgeführt, so wird ein asynchrones Pushing via Observable realisiert. Beide Schnittstellen bieten die gleiche Funktionalität nur der Datenfluss findet in die gegen gesetzte Richtung statt. Durch diese Dualität können beide Vorgehen äquivalent verwendet werden. Will man ein weiteres Objekt einer Liste wird die next()-Methode aktiv aufgerufen und wenn vorhanden wird ein weiteres Objekt dem Verbraucher zurück gegeben. Hingegen wird bei der Verwendung von Observables die Daten des Datenstroms mit der onNext()-Methode des Verbrauchers gepusht. Wie die Tabelle \ref{tbl.vglIterObs} zeigt gilt dies ebenso beim Auftreten eines Fehlers oder beim Erreichen des Endes der Datenquelle.
+\begin{table}[]
+	\centering
+	\begin{tabular}{|c|c|lll}
+		\cline{1-2}
+		\cellcolor[HTML]{C0C0C0}Pull (Iterable) & \cellcolor[HTML]{C0C0C0}Push (Observable) &  &  &  \\ \cline{1-2}
+		T next()                                & onNext(T)                                 &  &  &  \\ \cline{1-2}
+		throws Exception                        & onError(Throwable)                        &  &  &  \\ \cline{1-2}
+		returns                                 & onCompleted()                             &  &  &  \\ \cline{1-2}
+	\end{tabular}
+	\caption{Vergleich zwischen Funktionalität der Iterable- und Observable-Schnittstelle}
+	\label{tbl.vglIterObs}
+\end{table}
+Die Verbindung zwischen Beobachtetem und Beobachter findet über ein Abonnement statt. Damit werden die beiden zu einem Paar gebunden und die entsprechenden Methoden des Beobachters können nun von dem Stream angesprochen werden. Dies beschreibt auch noch eine weitere Eigenschaft. Ein Observable publiziert nur die Ereignisse wenn es jemanden gibt der diese Ereignisse auch fordert. Dies wird auch als \textit{faules} Verhalten bezeichnet. Somit wird das Arbeiten durch das Abonnieren und nicht durch das Erstellen eines Observables verursacht. Im Vergleich dazu kann ein Objekt vom Typ Future betrachtet werden. Wird ein Future erstellt, wird auf ein Ergebnis gewartet, welches direkt und einmalig asynchron ausgeführt wird und innerhalb des Futures zur Verfügung steht sobald das Ereignis abgeschlossen ist. Ein mehrfaches Ausführen eines Futures ist nicht möglich, anders als beim Observable wo zu jeder Zeit ein weiterer Abonnent hinzu kommen kann. Somit ist ein Observable-Objekt beliebig oft verwendbar. 
 \section{Rx.Observable}
 Interface Übersicht. Nutzen und Anwendung anhand von Beispiel. Hot vs. Cold
 \section{Rx.Observer}
