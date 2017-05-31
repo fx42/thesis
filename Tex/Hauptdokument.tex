@@ -36,11 +36,17 @@
 
 \usepackage[nottoc]{tocbibind}
 
-
-
 % für Listings
 \usepackage{listings}
-\lstset{numbers=left, numberstyle=\tiny, numbersep=5pt, stepnumber=4, keywordstyle=\color{black}\bfseries\itshape, stringstyle=\ttfamily,showstringspaces=false,basicstyle=\footnotesize,captionpos=b}
+\lstset{numbers=left,
+	 numberstyle=\tiny,
+	 numbersep=5pt,
+	 stepnumber=4,
+	 keywordstyle=\color{black}\bfseries\itshape,
+	 stringstyle=\ttfamily,
+	 showstringspaces=false,
+	 basicstyle=\footnotesize,
+	 captionpos=b}
 \lstset{language=java}
 
 
@@ -84,9 +90,10 @@
 %----------------- KAPITEL : Bsp  ----------------- %	
 \include{Kapitel/beispiel_implementierung}	
 
+\pagenumbering{Roman}
 \bibliographystyle{alphadin}
 \bibliography{literatur}
-\pagenumbering{Roman}	
+	
 	
 % ----- Abbildungen ----- %
 %\addcontentsline{toc}{section}{Abbildungsverzeichnis} % falls in Inhalsverzeichnis
