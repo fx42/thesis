@@ -37,17 +37,33 @@
 \usepackage[nottoc]{tocbibind}
 
 % für Listings
-\usepackage{listings}
-\lstset{numbers=left,
-	 numberstyle=\tiny,
-	 numbersep=5pt,
-	 stepnumber=4,
-	 keywordstyle=\color{black}\bfseries\itshape,
-	 stringstyle=\ttfamily,
-	 showstringspaces=false,
-	 basicstyle=\footnotesize,
-	 captionpos=b}
-\lstset{language=java}
+
+\usepackage{listings} 
+\usepackage{color} 
+\definecolor{light-gray}{gray}{0.98} % 0.95
+\definecolor{dkgreen}{rgb}{0,0.6,0}
+\definecolor{mauve}{rgb}{0.58,0,0.82}
+%\lstset{emph={trueIndex,root},emphstyle=\color{BlueViolet}}%\underbar} % for special keywords
+
+\lstset{language=Java, % Specify the language for listings here
+	keywordstyle=\color{blue}, % Add \bfseries for bold
+	basicstyle=\footnotesize\ttfamily, % Makes listings a smaller font size and a different font
+	%identifierstyle=\color{NavyBlue}, % Color of text inside brackets
+	backgroundcolor=\color{light-gray},
+	commentstyle=\color{dkgreen}\ttfamily, % Color of comments
+	stringstyle=\color{mauve}\rmfamily, % Font type to use for strings
+	numbers=none, % Change left to none to remove line numbers
+	numberstyle=\tiny, % Font size of the line numbers
+	stepnumber=5, % Increment of line numbers
+	numbersep=5pt, % Distance of line numbers from code listing
+	showstringspaces=false, % Sets whether spaces in strings should appear underlined
+	breaklines=true, % Force the code to stay in the confines of the listing box
+	captionpos=b, 
+	%frameround=ftff, % Uncomment for rounded frame
+	frame=single, % Frame border - none/leftline/topline/bottomline/lines/single/shadowbox/L
+	belowcaptionskip=.75\baselineskip, % Space after the "Listing #: Desciption" text and the listing box
+	literate={\^^09}{{\ \ }}1
+}
 
 
 
