@@ -68,18 +68,36 @@ Was das Flowable für das Observable ist, stellt der Processor für das Subject 
 \lstinputlisting[linerange={7-15}, caption={Beispielverwendung eines Processors}, label=lst.processorexample]{../SystemMonitor/examples/processor/ProcessorExample.java}
 In Listing \ref{lst.processorexample} ist ein einfaches Beispiel zu finden. Die Ähnlichkeit zur Subject-Klasse ist unverkennbar. Jedoch werden hier eben die Flowables verwendet, und das Back Pressure kann kontrolliert werden. Ist also bekannt das Schnittstellen nach den Richtlinien der Reactive Streams Initiative entwickelt wurden, ist es lohnenswert auf die Verwendung von Flowables und Processors zu setzten um auf einfachem Wege eine Kompatibilität zu ermöglichen.
 \section{Schedulers}
-Im Abschnitt zu Parallelisierung und Nebenläufigkeit wurde schon beschrieben, dass jedes Observable-Objekt serialisierbar und thread-safe gestaltet wird. Auch Threads kamen zur Sprache und wie eine Parallelisierung oder Nebenläufigkeit erozeugt werden kann. Da jeder der Bulk Operations auf einem Observable immer wieder ein neues, eigenständiges Observable weiterreicht, besteht die Möglichkeit Verarbeitungsschritte auf anderen Threads als auf dem des Subscribers auszuführen. Dafür bringt das Observable zwei Operation mit, \textit{subscribeOn} und \textit{observeOn}. Wenn also ein Observable mit \textit{subscribeOn} auf eine Thread Zugang erhält, werden alle weiteren Berechnungen auch auf diesem Thread ausgeführt. Soll nun die Ausgabe der berechneten Werte an den Subscriber übergeben werden, muss dies natürlich auf dem Thread stattfinden, auf welchem der Subscriber läuft. Um auf diesen Thread zurückzukehren verwendet man \textit{observeOn}.
+Im Abschnitt zu Parallelisierung und Nebenläufigkeit wurde schon beschrieben, dass jedes Observable-Objekt serialisierbar und thread-safe gestaltet wird. Auch Threads kamen zur Sprache und wie eine Parallelisierung oder Nebenläufigkeit erozeugt werden kann. Da jeder der Bulk Operations auf einem Observable immer wieder ein neues, eigenständiges Observable weiterreicht, besteht die Möglichkeit Verarbeitungsschritte auf anderen Threads als auf dem des Subscribers auszuführen. Dafür bringt das Observable zwei Operation mit, \textit{subscribeOn} und \textit{observeOn}. Wenn also ein Observable mit \textit{subscribeOn} auf eine Thread Zugang erhält, werden alle weiteren Berechnungen auch auf diesem Thread ausgeführt. Soll nun die Ausgabe der berechneten Werte an den Subscriber übergeben werden, muss dies natürlich auf dem Thread stattfinden, auf welchem der Subscriber läuft. Um auf diesen Thread zurückzukehren verwendet man \textit{observeOn}. Das Paradebeispiel stellt hier wieder die GUI. In JavaFx gibt es einen Scheduler\footnote{JavaFx Scheduler linken} der für alle Änderungen auf der Oberfläche verantwortlich ist. Findet nun eine Berechnung auf dem \textit{Schedulers.Computation()}-Threadpool statt, wird diese Veränderung in der GUI nur sichbar, wenn mit \textit{observerOn(JavaFxScheduler.platform())} auf den Thread der Benutzeroberfläche zurück gekehrt wird. Das selbe gilt auch bei Verwendung des RxJava Frameworks unter Android, da hier auch immer der Main-Thread der Applikation, auch UI-Thread genannt\footnote{Wenn unter Android eine App gestartet wird, wird für jede App ein Main-Thread erzeugt, der für alle I/O Aktion zuständig ist, sofern die App aktiv ist.}, für die Darstellung zuständig ist.
 \section{Operationen}
-Erläuterung von den Stadien der Operation von Beginn über Mitte bis Ende.
+Es wurde schon einiges über die auf Observable anwendbaren Bulk-Operations geschrieben und in manchen Listings auch angewandt, jedoch noch nicht im einzelnen geschildert wie der genaue Ablauf solche einer Operation stattfindet. Um die ganze Mechanik besser zu verstehen, werden folgend vier der gängigen Operationen veranschaulicht.
 \subsection{Operation filter()}
-Beispiel und Perlenbild. Einsatz beschreiben
+\begin{figure}
+	\centering
+	\includegraphics[width=1\textwidth]{Abb/filter}
+	\caption{Datenfluss Filter-Operation}
+	\label{pic:filter}
+\end{figure}
+Wie der Name schon sagt, handelt es sich bei Filter um eine Operation die einen Ausdruck prüft, und sofern das Element gültig ist, wird es weitergeben. Verwendet wir hier der von RxJava mitgebrachte Datentyp \textit{Predicate}. Er beinhaltet eine Methode \textit{test()} welche ein boolean zurück liefert. Somit ist es möglich einfache aber auch komplexere Überprüfungen innerhalb der Filter-Operation auszuführen. 
 \subsection{Transformation map()}
-Beispiel und Perlenbild. Einsatz beschreiben
-\subsection{Transformation flatMap()}
-Beispiel und Perlenbild. Einsatz beschreiben
+\begin{figure}
+	\centering
+	\includegraphics[width=1\textwidth]{Abb/map}
+	\caption{Datenfluss Map-Operation}
+	\label{pic:map}
+\end{figure}
 \subsection{Operation merge()}
-Beispiel und Perlenbild. Einsatz beschreiben
+\begin{figure}
+	\centering
+	\includegraphics[width=1\textwidth]{Abb/merge}
+	\caption{Datenfluss Merge-Operation}
+	\label{pic:merge}
+\end{figure}
 \subsection{Operation zip()}
-Beispiel und Perlenbild. Einsatz beschreiben
-Eventuell noch mehr Operationen
+\begin{figure}
+	\centering
+	\includegraphics[width=1\textwidth]{Abb/zip}
+	\caption{Datenfluss Zip-Operation}
+	\label{pic:zip}
+\end{figure}
 
