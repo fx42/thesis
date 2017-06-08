@@ -91,3 +91,6 @@ Eerklärung IoC bzgl komplexität von seuqentieller Programmierung
 
 ### https://www.youtube.com/watch?v=WKore-AkisY
 Erik Meijer Video Beispiel mit FX Java
+
+### https://akarnokd.blogspot.de/2015/10/comparison-of-reactive-streams.html
+Vergleich zwischen akka reactor RxJava

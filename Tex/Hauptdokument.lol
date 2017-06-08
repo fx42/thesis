@@ -9,3 +9,7 @@
 \contentsline {lstlisting}{\numberline {3.5}Beispiel eines Singles}{20}{lstlisting.3.5}
 \contentsline {lstlisting}{\numberline {3.6}Beispielverwendung eines Subjects}{20}{lstlisting.3.6}
 \contentsline {lstlisting}{\numberline {3.7}Beispielverwendung eines Processors}{21}{lstlisting.3.7}
+\contentsline {lstlisting}{\numberline {3.8}Beispiel Filter Operation}{23}{lstlisting.3.8}
+\contentsline {lstlisting}{\numberline {3.9}Beispiel Map Operation}{24}{lstlisting.3.9}
+\contentsline {lstlisting}{\numberline {3.10}Beispiel Merge Operation}{24}{lstlisting.3.10}
+\contentsline {lstlisting}{\numberline {3.11}Beispiel Zip Operation}{25}{lstlisting.3.11}
