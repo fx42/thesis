@@ -1,30 +1,33 @@
 package provider;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 import java.util.concurrent.TimeUnit;
 
 import io.reactivex.Observable;
+import io.reactivex.functions.Function;
 import io.reactivex.schedulers.Schedulers;
 import oshi.SystemInfo;
 import oshi.hardware.CentralProcessor;
 import oshi.hardware.GlobalMemory;
 import oshi.hardware.HardwareAbstractionLayer;
+import oshi.software.os.OSProcess;
+import oshi.software.os.OperatingSystem.ProcessSort;
 
 public class SystemProvider implements ISystemProvider
 {
 	private static SystemProvider instance;
 
-	private HardwareAbstractionLayer hw;
-	private CentralProcessor processor;
-	private GlobalMemory memory;
-	private int cpuAmount;
+	private final SystemInfo sysinfo;
+	private final HardwareAbstractionLayer hw;
+	private final CentralProcessor processor;
+	private final GlobalMemory memory;
+	private final int cpuAmount;
 
 	private SystemProvider()
 	{
-		hw = new SystemInfo().getHardware();
+		sysinfo = new SystemInfo();
+		hw = sysinfo.getHardware();
 		processor = hw.getProcessor();
 		memory = hw.getMemory();
 		cpuAmount = processor.getLogicalProcessorCount();
@@ -40,19 +43,6 @@ public class SystemProvider implements ISystemProvider
 	}
 
 	@Override
-	public Map< String, Observable< Double > > getCpuUsage()
-	{
-		Map< String, Observable< Double > > resultMap = new HashMap<>();
-		for ( int i = 0; i < cpuAmount; i++ )
-		{
-			int j = i;
-			resultMap.put( "CPU" + i, Observable.interval( 1, TimeUnit.SECONDS, Schedulers.computation() )
-					.map( tmp -> processor.getProcessorCpuLoadBetweenTicks()[ j ] ) );
-
-		}
-		return resultMap;
-	}
-
 	public List< Observable< Double > > fetchCpuValues()
 	{
 		List< Observable< Double > > resultList = new ArrayList<>();
@@ -83,4 +73,26 @@ public class SystemProvider implements ISystemProvider
 		return this.memory.getTotal();
 	}
 
+	@Override
+	public Observable< List< String > > getProcesses()
+	{
+
+		Function< OSProcess[], List< String > > func = new Function< OSProcess[], List< String > >()
+		{
+			@Override
+			public List< String > apply( OSProcess[] t ) throws Exception
+			{
+				List< String > list = new ArrayList<>();
+
+				for ( int i = 0; i < t.length; i++ )
+				{
+					list.add( t[ i ].getProcessID() + " : " + t[ i ].getName() );
+				}
+				return list;
+			}
+		};
+		return Observable.interval( 1, TimeUnit.SECONDS, Schedulers.computation() )
+				.map( x -> sysinfo.getOperatingSystem().getProcesses( 15, ProcessSort.CPU ) ).map( func );
+
+	}
 }

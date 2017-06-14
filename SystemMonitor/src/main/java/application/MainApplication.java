@@ -23,6 +23,7 @@ import javafx.scene.chart.PieChart;
 import javafx.scene.chart.PieChart.Data;
 import javafx.scene.chart.XYChart;
 import javafx.scene.chart.XYChart.Series;
+import javafx.scene.control.ListView;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
 import javafx.stage.Stage;
@@ -43,7 +44,7 @@ public class MainApplication extends Application
 		HBox hBox = new HBox( 10 );
 		hBox.setPadding( new Insets( 7, 7, 7, 7 ) );
 		hBox.setAlignment( Pos.BASELINE_LEFT );
-		hBox.getChildren().setAll( createBarChart(), createPieChart() );
+		hBox.getChildren().setAll( createBarChart(), createProcessList(), createPieChart() );
 
 		root.setLeft( hBox );
 		primaryStage.setTitle( "System Monitor" );
@@ -120,7 +121,7 @@ public class MainApplication extends Application
 			@Override
 			public void onComplete()
 			{
-				// TODO Auto-generated method stub
+				// Never reached
 
 			}
 		};
@@ -182,5 +183,16 @@ public class MainApplication extends Application
 			return s;
 		} ).subscribe( s -> pieChart.setData( s ) );
 		return pieChart;
+	}
+
+	private static Node createProcessList()
+	{
+		SystemProvider provider = SystemProvider.getInstance();
+		ListView< String > listview = new ListView<>();
+
+		provider.getProcesses().observeOn( JavaFxScheduler.platform() ).retry()
+				.subscribe( x -> listview.setItems( FXCollections.observableArrayList( x ) ) );
+
+		return listview;
 	}
 }
