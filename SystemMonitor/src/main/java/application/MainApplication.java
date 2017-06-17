@@ -1,9 +1,13 @@
 package application;
 
 import java.util.List;
+import java.util.concurrent.TimeUnit;
+
+import com.sun.javafx.robot.impl.FXRobotHelper.FXRobotSceneAccessor;
 
 import io.reactivex.Observable;
 import io.reactivex.Observer;
+import io.reactivex.Single;
 import io.reactivex.disposables.Disposable;
 import io.reactivex.rxjavafx.observables.JavaFxObservable;
 import io.reactivex.rxjavafx.schedulers.JavaFxScheduler;
@@ -44,7 +48,7 @@ public class MainApplication extends Application
 		HBox hBox = new HBox( 10 );
 		hBox.setPadding( new Insets( 7, 7, 7, 7 ) );
 		hBox.setAlignment( Pos.BASELINE_LEFT );
-		hBox.getChildren().setAll( createBarChart(), createProcessList(), createPieChart() );
+		hBox.getChildren().setAll( createBarChartV2() );
 
 		root.setLeft( hBox );
 		primaryStage.setTitle( "System Monitor" );
@@ -90,6 +94,32 @@ public class MainApplication extends Application
 		return bc;
 
 	}
+	
+	private static Node createBarChartV2()
+	{
+		SystemProvider provider = SystemProvider.getInstance();
+
+		final CategoryAxis xAxis = new CategoryAxis();
+		final NumberAxis yAxis = new NumberAxis( 0, 100, 1 );
+		final BarChart< String, Number > bc = new BarChart< String, Number >( xAxis, yAxis );
+		bc.setTitle( "CPU Overview" );
+		xAxis.setLabel( "CPU" );
+		yAxis.setLabel( "Usage" );
+		yAxis.setAutoRanging( false );
+		bc.setLegendVisible( false );
+		bc.setCategoryGap( 10 );
+
+		List< Observable< Double > > list = provider.fetchCpuValues();
+		Series< String, Number > chartSeries = new XYChart.Series<>();
+
+		for ( int i = 0; i < provider.getCpuAmount(); i++ )
+		{
+			int j = i;
+			list.get( j ).map( x -> x.doubleValue() * 100 ).map( x -> new XYChart.Data<String, Number>( "CPU " + j, x )).observeOn( JavaFxScheduler.platform() ).subscribe(data -> {System.out.println( data ); chartSeries.getData().add( data );});
+		}
+		bc.getData().add( chartSeries );
+		return bc;
+	}
 
 	private static void changeOnList( ObservableList< XYChart.Data< String, Number > > list, Observable< Double > value,
 			int index )
@@ -100,7 +130,7 @@ public class MainApplication extends Application
 			@Override
 			public void onSubscribe( Disposable d )
 			{
-				// TODO Auto-generated method stub
+				// TODO not needed
 
 			}
 
