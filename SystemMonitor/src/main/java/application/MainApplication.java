@@ -111,13 +111,21 @@ public class MainApplication extends Application
 
 		List< Observable< Double > > list = provider.fetchCpuValues();
 		Series< String, Number > chartSeries = new XYChart.Series<>();
-
-		for ( int i = 0; i < provider.getCpuAmount(); i++ )
+		
+		
+//		list.get( 0 ).observeOn( Schedulers.computation()).map( x -> x * 100 ).map( x -> new XYChart.Data<String, Number>( "CPU 0 ", x ))
+//		.retry().observeOn(JavaFxScheduler.platform()).subscribe(data -> {System.out.println( data ); listOfData.add( data );});
+//		
+//		chartSeries.setData( listOfData );
+		
+		bc.getData().clear();
+		for (int i = 0; i < list.size(); i++)
 		{
-			int j = i;
-			list.get( j ).map( x -> x.doubleValue() * 100 ).map( x -> new XYChart.Data<String, Number>( "CPU " + j, x )).observeOn( JavaFxScheduler.platform() ).subscribe(data -> {System.out.println( data ); chartSeries.getData().add( data );});
+			
+			bc.getData().add( setObservableChartData(list.get( i ), i) );	
 		}
-		bc.getData().add( chartSeries );
+		
+		
 		return bc;
 	}
 
@@ -224,5 +232,13 @@ public class MainApplication extends Application
 				.subscribe( x -> listview.setItems( FXCollections.observableArrayList( x ) ) );
 
 		return listview;
+	}
+	
+	private static Series< String, Number > setObservableChartData(Observable< Double> data, int index)
+	{
+		Series< String, Number > chartSeries = new XYChart.Series<>();
+		data.observeOn( Schedulers.computation()).map( x -> x * 100 ).map( x -> new XYChart.Data<String, Number>( "CPU  " + index, x )).
+		observeOn( JavaFxScheduler.platform()).subscribe(d -> chartSeries.getData().add( d ));
+		return chartSeries;
 	}
 }
