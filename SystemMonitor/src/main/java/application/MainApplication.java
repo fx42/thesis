@@ -1,17 +1,9 @@
 package application;
 
 import java.util.List;
-import java.util.concurrent.TimeUnit;
-
-import com.sun.javafx.robot.impl.FXRobotHelper.FXRobotSceneAccessor;
 
 import io.reactivex.Observable;
-import io.reactivex.Observer;
-import io.reactivex.Single;
-import io.reactivex.disposables.Disposable;
-import io.reactivex.rxjavafx.observables.JavaFxObservable;
 import io.reactivex.rxjavafx.schedulers.JavaFxScheduler;
-import io.reactivex.schedulers.Schedulers;
 import javafx.application.Application;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -31,6 +23,7 @@ import javafx.scene.control.ListView;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
 import javafx.stage.Stage;
+import provider.ISystemProvider;
 import provider.SystemProvider;
 
 public class MainApplication extends Application
@@ -46,130 +39,60 @@ public class MainApplication extends Application
 	{
 		BorderPane root = new BorderPane();
 		HBox hBox = new HBox( 10 );
-		hBox.setPadding( new Insets( 7, 7, 7, 7 ) );
-		hBox.setAlignment( Pos.BASELINE_LEFT );
-		hBox.getChildren().setAll( createBarChartV2() );
+		hBox.setPadding( new Insets( 8, 5, 5, 8 ) );
+		hBox.setAlignment( Pos.BASELINE_CENTER );
+		hBox.getChildren().setAll( createBarChart(), createProcessList(), createPieChart() );
 
 		root.setLeft( hBox );
 		primaryStage.setTitle( "System Monitor" );
-		primaryStage.setResizable( true );
-		primaryStage.setScene( new Scene( root, 1000, 400 ) );
+		primaryStage.setResizable( false );
+		primaryStage.setScene( new Scene( root, 1200, 400 ) );
 		primaryStage.show();
-
 	}
 
 	private static Node createBarChart()
 	{
-		SystemProvider provider = SystemProvider.getInstance();
+		ISystemProvider provider = SystemProvider.getInstance();
 
 		final CategoryAxis xAxis = new CategoryAxis();
 		final NumberAxis yAxis = new NumberAxis( 0, 100, 1 );
-		final BarChart< String, Number > bc = new BarChart< String, Number >( xAxis, yAxis );
-		bc.setTitle( "CPU Overview" );
+		final BarChart< String, Number > barChart = new BarChart< String, Number >( xAxis, yAxis );
+		barChart.setTitle( "CPU Overview" );
 		xAxis.setLabel( "CPU" );
 		yAxis.setLabel( "Usage" );
 		yAxis.setAutoRanging( false );
-		bc.setLegendVisible( false );
-		bc.setCategoryGap( 10 );
+		barChart.setLegendVisible( false );
+		barChart.setAnimated( true );
+		barChart.setCategoryGap( 8 );
 
-		ObservableList< XYChart.Data< String, Number > > listOfData = FXCollections.observableArrayList();
+		List< Observable< Double > > cpuLoadList = provider.fetchCpuValues();
+		ObservableList< Series< String, Number > > seriesList = FXCollections.observableArrayList();
 
-		for ( int i = 0; i < provider.getCpuAmount(); i++ )
+		for ( int i = 0; i < cpuLoadList.size(); i++ )
 		{
-			listOfData.add( new XYChart.Data< String, Number >( "CPU" + i, 0 ) );
-
+			Series< String, Number > chartSeries = setObservableChartData( cpuLoadList.get( i ), i );
+			seriesList.add( chartSeries );
 		}
 
-		List< Observable< Double > > list = provider.fetchCpuValues();
-		Series< String, Number > chartSeries = new XYChart.Series<>();
+		barChart.setData( seriesList );
 
-		for ( int i = 0; i < list.size(); i++ )
-		{
-			changeOnList( listOfData, list.get( i ), i );
-			System.err.println( "list: " + listOfData.toString() + ", listitem: " + list.get( i ) + "index: " + i );
-			chartSeries.getData().add( listOfData.get( i ) );
-		}
-
-		bc.getData().add( chartSeries );
-		return bc;
-
-	}
-	
-	private static Node createBarChartV2()
-	{
-		SystemProvider provider = SystemProvider.getInstance();
-
-		final CategoryAxis xAxis = new CategoryAxis();
-		final NumberAxis yAxis = new NumberAxis( 0, 100, 1 );
-		final BarChart< String, Number > bc = new BarChart< String, Number >( xAxis, yAxis );
-		bc.setTitle( "CPU Overview" );
-		xAxis.setLabel( "CPU" );
-		yAxis.setLabel( "Usage" );
-		yAxis.setAutoRanging( false );
-		bc.setLegendVisible( false );
-		bc.setCategoryGap( 10 );
-
-		List< Observable< Double > > list = provider.fetchCpuValues();
-		Series< String, Number > chartSeries = new XYChart.Series<>();
-		
-		
-//		list.get( 0 ).observeOn( Schedulers.computation()).map( x -> x * 100 ).map( x -> new XYChart.Data<String, Number>( "CPU 0 ", x ))
-//		.retry().observeOn(JavaFxScheduler.platform()).subscribe(data -> {System.out.println( data ); listOfData.add( data );});
-//		
-//		chartSeries.setData( listOfData );
-		
-		bc.getData().clear();
-		for (int i = 0; i < list.size(); i++)
-		{
-			
-			bc.getData().add( setObservableChartData(list.get( i ), i) );	
-		}
-		
-		
-		return bc;
+		return barChart;
 	}
 
-	private static void changeOnList( ObservableList< XYChart.Data< String, Number > > list, Observable< Double > value,
-			int index )
+	private static Series< String, Number > setObservableChartData( Observable< Double > data, int index )
 	{
-		Observer< Double > observer = new Observer< Double >()
-		{
-
-			@Override
-			public void onSubscribe( Disposable d )
-			{
-				// TODO not needed
-
-			}
-
-			@Override
-			public void onNext( Double t )
-			{
-				list.get( index ).setYValue( t * 100 );
-				System.out.println( index + " " + t * 100 + "\n --------------------------" );
-			}
-
-			@Override
-			public void onError( Throwable e )
-			{
-				e.printStackTrace();
-
-			}
-
-			@Override
-			public void onComplete()
-			{
-				// Never reached
-
-			}
-		};
-		value.observeOn( Schedulers.computation() ).retry().subscribe( observer );
+		XYChart.Series< String, Number > chartSeries = new XYChart.Series<>();
+		chartSeries.getData().add( new XYChart.Data< String, Number >( "CPU  " + index, 0 ) );
+		data.map( x -> x * 100 ).observeOn( JavaFxScheduler.platform() ).retry().subscribe( d -> {
+			System.out.println( "CPU  " + index + "  " + +d );
+			chartSeries.getData().get( 0 ).setYValue( d );
+		} );
+		return chartSeries;
 	}
 
 	private static Node createPieChart()
 	{
-		SystemProvider provider = SystemProvider.getInstance();
-		// Piechart for RAM usage must be created. Fetching of data get started
+		ISystemProvider provider = SystemProvider.getInstance();
 		PieChart pieChart = new PieChart();
 		pieChart.setLegendVisible( true );
 		pieChart.setLegendSide( Side.BOTTOM );
@@ -179,66 +102,26 @@ public class MainApplication extends Application
 		ObservableList< Data > valueList = FXCollections.observableArrayList();
 		Data memoryInUse = new Data( "Memory in use", 0 );
 		Data memoryAvailable = new Data( "available Memory", 0 );
-
-		Observer< Long > sub = new Observer< Long >()
-		{
-
-			@Override
-			public void onNext( Long t )
-			{
-				System.out.println( "set memory values value" );
-				valueList.get( 0 ).setPieValue( t.doubleValue() );
-				valueList.get( 1 ).setPieValue( provider.getTotalMemory() - t );
-			}
-
-			@Override
-			public void onError( Throwable t )
-			{
-				t.printStackTrace();
-
-			}
-
-			@Override
-			public void onComplete()
-			{
-				// Should never complete
-
-			}
-
-			@Override
-			public void onSubscribe( Disposable d )
-			{
-				// Not necessary
-
-			}
-		};
-
 		valueList.add( memoryAvailable );
 		valueList.add( memoryInUse );
-		provider.getAvailableMemory().observeOn( Schedulers.computation() ).retry().subscribe( sub );
-		JavaFxObservable.emitOnChanged( valueList ).observeOn( JavaFxScheduler.platform() ).retry().map( s -> {
-			System.out.println( s );
-			return s;
-		} ).subscribe( s -> pieChart.setData( s ) );
+
+		provider.getAvailableMemory().observeOn( JavaFxScheduler.platform() )
+				.subscribe( x -> memoryInUse.setPieValue( provider.getTotalMemory() - x ) );
+		provider.getAvailableMemory().observeOn( JavaFxScheduler.platform() )
+				.subscribe( x -> memoryAvailable.setPieValue( x ) );
+
+		pieChart.setData( valueList );
+
 		return pieChart;
 	}
 
 	private static Node createProcessList()
 	{
-		SystemProvider provider = SystemProvider.getInstance();
+		ISystemProvider provider = SystemProvider.getInstance();
 		ListView< String > listview = new ListView<>();
-
 		provider.getProcesses().observeOn( JavaFxScheduler.platform() ).retry()
 				.subscribe( x -> listview.setItems( FXCollections.observableArrayList( x ) ) );
 
 		return listview;
-	}
-	
-	private static Series< String, Number > setObservableChartData(Observable< Double> data, int index)
-	{
-		Series< String, Number > chartSeries = new XYChart.Series<>();
-		data.observeOn( Schedulers.computation()).map( x -> x * 100 ).map( x -> new XYChart.Data<String, Number>( "CPU  " + index, x )).
-		observeOn( JavaFxScheduler.platform()).subscribe(d -> chartSeries.getData().add( d ));
-		return chartSeries;
 	}
 }

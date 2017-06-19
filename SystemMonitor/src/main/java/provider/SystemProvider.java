@@ -5,9 +5,7 @@ import java.util.List;
 import java.util.concurrent.TimeUnit;
 
 import io.reactivex.Observable;
-import io.reactivex.disposables.Disposable;
 import io.reactivex.functions.Function;
-import io.reactivex.rxjavafx.schedulers.JavaFxScheduler;
 import io.reactivex.schedulers.Schedulers;
 import oshi.SystemInfo;
 import oshi.hardware.CentralProcessor;
@@ -94,7 +92,6 @@ public class SystemProvider implements ISystemProvider
 			}
 		};
 		return Observable.interval( 1, TimeUnit.SECONDS, Schedulers.computation() )
-				.map( x -> sysinfo.getOperatingSystem().getProcesses( 15, ProcessSort.CPU ) ).map( func );
-
+				.map( x -> sysinfo.getOperatingSystem().getProcesses( 16, ProcessSort.CPU ) ).map( func );
 	}
 }

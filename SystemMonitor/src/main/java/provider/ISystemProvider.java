@@ -15,5 +15,4 @@ public interface ISystemProvider
 	long getTotalMemory();
 
 	Observable< List< String > > getProcesses();
-
 }
