@@ -2,7 +2,7 @@
 Im Zusammenhang mit Reactive Programming treten weitere Begriffe auf, die auch das Schlüsselwort \textit{reactive} in ihrer Bezeichnung tragen. Die \textit{Reactive Systems} sowie das \textit{Fuctional Reactive Programming}. In diesem Kapitel wird eine Differenzierung dieser Begriffe von Reactive Programming durchgeführt. Ebenso soll dadurch eine Einordnung von Reactive Programming in den Kontext der Softwareentwicklung vereinfacht werden.
 \section{Differenzierung zwischen Reactive Proramming und Reactive Systems}
 Bislang wurde von einem reinen Vorgehen für eine passende Implementierung gesprochen. Wie jedoch wirkt es sich aus, wenn eine komplette Anwendung reaktiv reagieren soll? Wie verhält es sich weiter wenn mehrere Teile reaktiv funktionieren und kommunizieren sollen? Der grundlegende Gedanke reaktiver Systeme wurde schon im Jahre 1985 in einem Paper von D. Harel und A. Pnueli beschrieben \cite{Harel.1985}. Zur heutigen Zeit jedoch bezieht man sich bei Richtlinien zur Gestaltung reaktiver Systeme eher auf das Reactive Manifesto \cite{Boner.2014}. Laut Jonas Bonér und den vielen Unterstützern sind vier Bestandteile essentiell, damit eine Anwendung die Anforderung erfüllt um als reaktiv zu gelten. Die Ansicht des Manifests stützt sich auf einen Architektur- beziehungsweise Designstil und soll als Grundlage zur Entwicklung reaktiver Systeme dienen. Die folgenden Erklärungen sind dem Manifest entnommen und sollen einen Verständnis zu den vier Eigenschaften bieten wie sie auch in Abbildung \ref{pic:manifest4} aufgezeigt werden. Wie in diesem beschrieben sind Reaktive Systeme:
-\begin{figure}
+\begin{figure}[hbt]
 	\centering
 	\includegraphics[width=1\textwidth]{Abb/manifest4achsen.PNG}
 	\caption{Die vier relevanten Bestandteile für ein reaktives System.Quelle \cite{Boner.2014}}
@@ -32,7 +32,7 @@ Auf der Suche nach einer Definition zu Reactive Programming stößt man oft auf 
 \end{displaymath}
 Dieser Ausdruck besagt, dass jeder Wert $x$ auf $x+2$ abgebildet wird.
 Statt Rechenanweisungen werden Programme als Menge von Definitionen beschrieben, die mathematisch eine Abbildung von Eingabedaten auf Ausgabedaten darstellt und gleichzeitig selbst aus Funktionsaufrufen zusammengesetzt sind \cite{fpwiki}. Wird eine funktionale Programmiersprache nun um den Faktor Zeit erweitert kann ein reaktives Verhalten erreicht werden. Diese Art der Realisierung nennt man Functional Reactive Programming \cite{hsklwiki}. Dieser Zeitfaktor zeigt sich im Funktionalen in der kontinuierlichen Wertänderung im Laufe der Zeit. Die Verwechslung der Begriffe entsteht wenn man sich zum Beispiel Java 8 anschaut. Mit Java 8 nahm die Klasse der Funktionen sowie die Lambda-Ausdrücke Einzug in die objektorientierte Programmiersprache Java. In Java-Code werden Lambda-Ausdrücke wie folgt dargestellt:
-\begin{lstlisting}[language=java, caption={Lambda Beispiel in Java}, label=lst:LambdaJava, frame=single]
+\begin{lstlisting}[language=java, caption={Lambda Beispiel in Java}, float=hbt, label=lst:LambdaJava, frame=single]
 List< Integer > list = Arrays.asList( 1, 2, 3, 4, 5 );
 list.forEach( element -> System.out.println( "Number" + element ) );
 \end{lstlisting}

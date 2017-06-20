@@ -73,7 +73,6 @@ public class MainApplication extends Application
 			Series< String, Number > chartSeries = setObservableChartData( cpuLoadList.get( i ), i );
 			seriesList.add( chartSeries );
 		}
-
 		barChart.setData( seriesList );
 
 		return barChart;
@@ -83,7 +82,7 @@ public class MainApplication extends Application
 	{
 		XYChart.Series< String, Number > chartSeries = new XYChart.Series<>();
 		chartSeries.getData().add( new XYChart.Data< String, Number >( "CPU  " + index, 0 ) );
-		data.map( x -> x * 100 ).observeOn( JavaFxScheduler.platform() ).retry().subscribe( d -> {
+		data.map( x -> x * 100 ).observeOn( JavaFxScheduler.platform() ).subscribe( d -> {
 			System.out.println( "CPU  " + index + "  " + +d );
 			chartSeries.getData().get( 0 ).setYValue( d );
 		} );
@@ -105,10 +104,10 @@ public class MainApplication extends Application
 		valueList.add( memoryAvailable );
 		valueList.add( memoryInUse );
 
-		provider.getAvailableMemory().observeOn( JavaFxScheduler.platform() )
-				.subscribe( x -> memoryInUse.setPieValue( provider.getTotalMemory() - x ) );
-		provider.getAvailableMemory().observeOn( JavaFxScheduler.platform() )
-				.subscribe( x -> memoryAvailable.setPieValue( x ) );
+		provider.getAvailableMemory().observeOn( JavaFxScheduler.platform() ).subscribe( x -> {
+			memoryInUse.setPieValue( provider.getTotalMemory() - x );
+			memoryAvailable.setPieValue( x );
+		} );
 
 		pieChart.setData( valueList );
 
@@ -119,7 +118,7 @@ public class MainApplication extends Application
 	{
 		ISystemProvider provider = SystemProvider.getInstance();
 		ListView< String > listview = new ListView<>();
-		provider.getProcesses().observeOn( JavaFxScheduler.platform() ).retry()
+		provider.getProcesses().observeOn( JavaFxScheduler.platform() )
 				.subscribe( x -> listview.setItems( FXCollections.observableArrayList( x ) ) );
 
 		return listview;
