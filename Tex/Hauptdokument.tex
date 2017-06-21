@@ -1,14 +1,14 @@
-\documentclass[a4paper,12pt,headsepline]{book}
+\documentclass[a4paper,12pt,headsepline]{report}
 
 %----------------- PDF CONFIG ----------------- %
 \pdfinfo{    
-     /Title (Reactive Programming - Von der Theorie zum Praxis) 
+     /Title (Reactive Programming - Ein neues Programmierparadigma) 
      /Subject   (Reactive Programming)    
      /Author  (Felix Scheidel) 
      /Keywords   (Java 8, Reactive Programming, Reactive Systems, RxJava, RxJavaFx)      
 } 
 
-\title{Reactive Programming - Von der Theorie zum Praxis}
+\title{Reactive Programming - Ein neues Programmierparadigma}
 \author{Felix Scheidel}
 \date{\today}
 
@@ -32,6 +32,7 @@
 \usepackage{color}
 \usepackage{url}
 \usepackage[table,xcdraw]{xcolor}
+\usepackage{pdfpages}
 
 
 \usepackage[nottoc]{tocbibind}
@@ -85,7 +86,7 @@
 \pagenumbering{roman} % Seitennummer
 
 %----------------- DECKBLATT -----------------%
- \include{Deckblatt/deckblatt}
+ \includepdf{Deckblatt/Deckblatt.pdf}
  
 %----------------- ABSTRACT -----------------%
  \include{Abstract/Abstract}
@@ -103,10 +104,10 @@
 \include{Kapitel/einfuehrung}
 %----------------- KAPITEL : WAS IST RP  ----------------- %	
 \include{Kapitel/was_ist_reactive_programming}	
-%----------------- KAPITEL : WIE WIRD ES REALISIERT  ----------------- %
-\include{Kapitel/realisierung}
 %----------------- KAPITEL : Abgrenzung  ----------------- %	
-\include{Kapitel/abgrenzung}		
+\include{Kapitel/abgrenzung}
+%----------------- KAPITEL : WIE WIRD ES REALISIERT  ----------------- %
+\include{Kapitel/realisierung}		
 %----------------- KAPITEL : RP EINFÜHRUNG  ----------------- %	
 \include{Kapitel/rp_einfuehrung}	
 %----------------- KAPITEL : Bsp  ----------------- %	
