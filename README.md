@@ -1,21 +1,6 @@
-# Thesis - Reactive Programming
+# Reactive Programming - Ein neues Programmierparadima
 ---
-### Table of content
-1. Einleitung
-  * Aktuell ist einen der häufig auftretenden Buzzword eindeutig Reactive Programming. Keine Konferenz vergeht wo es nicht ein Beitrag zu dieser Thematik gibt. Diese Arbeit wird sich genau um dieses Buzzword drehen und versuchen dieses zu entmystifizieren. Viele Anwendungen basieren darauf, um Reaktionen auf Events durchzuführen. In der heutigen Softwareentwicklung dreht es sich oft genau darum, diese Reaktionen auf Events zu verbessern, zu beschleunigen und zu vereinfachen. Natürlich steht in diesem Punkt ganz klar die User Experience eine große Rolle. Die Benutzer besagter Programme sind es nicht mehr gewohtn in der heutigen Zeit auf die angefragten Informationen zu warten. Einher geht jedoch nicht, dass sich die angefreagten Informationen verkleinern, sondern eher, im Gegenteil. Somit ist es natürlich an der Softwareentwicklung Lösungen und Wege zufinden, die Nutzerzufriedenheit hoch zu halten.
-2. Was ist Reactive Programming
-  * Paradigma - was sind Paradigmen, vgl. OOP
-  * Was sind Datenströme/Streams
-  * Was bedeutet Reactive allgemein und speziell in diesem Kontext
-  * Was sind in diesem Kontext Reactive Systems
-  * Was hat Reactive Programming mit Functional Reactive Programming gemein
-  * Vergleich und Auflistung von Framkeworks für unterschiedliche Programmiersprachen
-  * Spezielle Framkeworks für die Entwicklung unter Java, Bezug auf JavaFX
-  * Testing mit JUnit
-3. Anwendung anhand eines Beispiels in Java
-  * Funktionale Beschreibung der Anwendung
-  * Einführung RxJava und RxJavaFX
-  * Erklärung der einzelene Bestandteile und Beschreibung des Codes
-4. Fazit, Ausblick
-5. Quellen
-6. Listings 
+### Zusammenfassung
+In dieser wissenschaftlichen Arbeit wird das Programmierparadigma Reactive Programming behandelt. Reactive Programming verbindet die Eigenschafen für asychonres, nicht blockierendes Verarbeiten von Datenströmen. Zu Beginn wird geklärt wie dieses Paradigma in den Kontext der Softwareentwicklung eingeordnet werden kann und wie es sich von Reactive Systems unterscheidet. Anschließend beschäftigt sich diese Arbeit mit den Bestandteilen wie dem Observer Pattern und dem Back Pressure, die dieses asynchrone und nicht blockierende Verhalten generieren. Zusammen bilden sie die Reactive Streams welche ebenfalls genauer erläutern werden. Auch wird eine bereits vorhandene Implementierung in Form der RxJava2 Bibliothek im Detail betrachtet. Es werden Eigenschaften wie Synchronität oder Nebenläufigkeit beschrieben. Weiterhin wird auf die grundlegenden Klassen wie Observables oder Schedulers genauer eingegangen und die Beschreibungen werden durch Codebeispiele unterstützt. Es folgt eine Implementierung eines Systemmonitors als Beispielapplikation welche die RxJava2 Bibliothek verwendet und einige vorab besprochene Methoden genauer bahandelt. Abschließend wird evaluiert wo Reactive Programming seine Vorteile hat und in welchen Anwendungsbereichen sich dieses Paradigma etablieren kann. Diese Einschätzung legt nah, dass die wahrscheinlich sinnvollsten Gebiete die Arbeit mit REST-Schnittstellen, Microservice-Architekturen und sehr I/O basierte Anwendungen sein werden.
+### Abstract
+This scientfic work is treating the programming paradigm Reactive Programming. This paradigm combines the attributes for asynchronous an non-blocking processing of datastreams. At fist Reacitve Programming is classified into the context of software development and the difference to Reactive Systems is exposed. Afterwards this work explains different parts like Observer Pattern or Back Pressure which are necessary to create the asynchronous and non-blocking behavior. Theses parts put together the Reactive Streams which also get explained in this work. Furthermore an implementation of the already existing library RxJava2 gets discussed in detail. Charactaristics like synchronicity and concurrency get described. There will be a deeper look into the base classes like Observables and Schedulers accompanied with some coding examples. Ensuing there is an implementation of a system monitoring tool using the RxJava2 library und showing of some of the preceding methods. Finally an evaluation of the benefits of the Reactive Programming paradigm takes place, explaining which area of application this paradigm has it's best use. The resulting estimation sees REST-Interfaces, the Microservice-Architecture and very I/O heavy application as the most meaningful areas of effect for Reactive Programming.
