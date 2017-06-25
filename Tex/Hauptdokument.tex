@@ -116,23 +116,23 @@
 \include{Kapitel/eval}	
 
 \pagenumbering{Roman}
+\let\cleardoublepage\clearpage
 \bibliographystyle{alphadin}
 \bibliography{literatur}
-	
-	
 % ----- Abbildungen ----- %
 %\addcontentsline{toc}{section}{Abbildungsverzeichnis} % falls in Inhalsverzeichnis
+\let\cleardoublepage\clearpage
 \listoffigures
-
 % ----- Tabellen----- %
 % \addcontentsline{toc}{section}{Tabellenverzeichnis}  % falls in Inhalsverzeichnis
 % \fancyhead[L]{Abbildungsverzeichnis / Abkürzungsverzeichnis} %Kopfzeile links
+\let\cleardoublepage\clearpage
 \listoftables
-
 % ----- Listings ----- %
 % Listingverzeichnis soll im Inhaltsverzeichnis auftauchen
 % \addcontentsline{toc}{section}{Listingverzeichnis}
 % \fancyhead[L]{Abbildungs- / Tabellen- / Listingverzeichnis} %Kopfzeile links
+\let\cleardoublepage\clearpage
 \renewcommand{\lstlistlistingname}{Listingverzeichnis}
 \lstlistoflistings
 	

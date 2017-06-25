@@ -47,8 +47,32 @@ Diese Klasse ist nach den Kriterien der Reactive Streams realisiert, was wiederu
 	\item Weiter blockierende auf Pull-basierenden Datenquellen deren API eventuell in Zukunft auch auf ein reaktives Verhalten umgestellt werden. Hier liegt der Vorteil in der Reactive Streams Konvention die voraussichtlich auch in Zukunft verwendet wird.
 \end{itemize}
 \lstinputlisting[linerange={10-17, 19-33, 49-49}, float=hbt, caption={Beispiel Flowable mit BackPressureBuffer}, label=lst:flowexample]{../SystemMonitor/examples/flow/FlowExample.java}
-Jedes Observable und Flowable Objekt besitzt einen Puffer um nicht verarbeitete Daten zwischen zu speichern. Diese Größe beträgt bei Flowables standardmäßig 128 Objekte, kann jedoch geändert werden. Bei Observables ist dieser Puffer dynamisch und kann wenn nötig den kompletten Speicher beanspruchen. Betrachtet man das Listing \ref{lst:flowexample} sieht man den Aufruf der \textit{onBackpressureBuffer()}-Methode. Diese Methode bietet ein Observable-Objekt nicht. Es handelt sich um eine Implementierung des Publisher-Interfaces. Hiermit kann direkt eine Puffergröße für jedes Flowable festgelegt werden. Kann nun ein Subscriber also nur eine gewisse Anzahl von Elementen verarbeiten, kann über den bereits erwähnten Feedback-Kanal des Flowable informiert werden, die Objekte wenn möglich langsamer auszugeben. Die Verzögerung wird durch den zusätzlichen Puffer der \textit{onBackpressureBuffer()}-Methode ermöglicht. In diesem Beispiel wäre dieser Aufruf nicht notwendig, doch zur Veranschaulichung wurde er hinzugefügt. Da auch die Anzahl der Elemente bekannt ist, kann der Puffer natürlich genau auf die Anzahl der Elemente festgelegt werden.
-Um nun die Verwendung des Feedback-Kanals noch zu betrachten, wurde das Beispiel um einen \textit{DefaultSubscriber} erweitert.
+Jedes Observable und Flowable Objekt besitzt einen Puffer um nicht verarbeitete 
+Daten zwischen zu speichern. Diese Größe beträgt bei Flowables standardmäßig 128 
+Objekte, kann jedoch geändert werden. Bei Observables ist dieser Puffer 
+dynamisch und kann wenn nötig den kompletten Speicher beanspruchen. Betrachtet 
+man das Listing \ref{lst:flowexample} sieht man den Aufruf der 
+\textit{onBackpressureBuffer()}-Methode. Diese Methode bietet ein 
+Observable-Objekt nicht. Es handelt sich um eine Implementierung des 
+Publisher-Interfaces. Hiermit kann direkt eine Puffergröße für jedes Flowable 
+festgelegt werden. Kann nun ein Subscriber also nur eine gewisse Anzahl von 
+Elementen verarbeiten, kann über den bereits erwähnten Feedback-Kanal des 
+Flowable informiert werden, die Objekte wenn möglich langsamer auszugeben. Die 
+Verzögerung wird durch den zusätzlichen Puffer der 
+\textit{onBackpressureBuffer()}-Methode ermöglicht. Die funktionsweise dieses 
+Buffers lässt sich mit Abbildung \ref{pic:bbbuffer} aus der 
+RxJava2 JavaDoc nachvollziehen. In diesem Beispiel wäre dieser Aufruf zwar 
+nicht notwendig, doch zur Veranschaulichung wurde er hinzugefügt. Da auch die 
+Anzahl der Elemente bekannt ist, kann der Puffer natürlich genau auf die Anzahl 
+der Elemente festgelegt werden.
+Um nun die Verwendung des Feedback-Kanals noch zu betrachten, wurde das 
+Beispiel um einen \textit{DefaultSubscriber} erweitert.
+\begin{figure}[hbt]
+	\centering
+	\includegraphics[width=1\textwidth]{Abb/backpressurebuffer}
+	\caption{Funktionsweise BackPressureBuffer.}
+	\label{pic:bbbuffer}
+\end{figure}
 Durch den Aufruf der \textit{onStart()}-Methode wird direkt zu Beginn der Subscription durch den \textit{request(1)} Aufruf die verträgliche Menge des Subscribers weiter gegeben. Ebenso findet diese Anfrage auch beim Aufruf jedes \textit{onNext()} Callbacks statt. Durch diesen Aufruf erfährt das Flowable, dass immer nur ein Element an den Subscriber ausgegben werden soll. Die beiden weiteren Elemente würden nun im BackPressureBuffer unterkommen und bei weiteren Anfragen zur Verfügung gestellt werden. Wie schon erwähnt ist dies in diesem kurzen Beispiel jedoch nicht nötig und dient nur zur Erklärung der Funktionsweise.
 \section{Single}
 Wo Observables oder Flowables eine Menge zwischen Null und unendlich vielen Elementen ausgeben, steht Single, wie der Name schon sagt, dafür, dass immer nur einmal auf ein einziges Event reagiert werden kann. Somit sind auch die drei bekannten Methoden zur Datenausgabe hier nicht notwendig. Stattdessen sind nur zwei Methoden vorhanden, \textit{onSuccess()} und \textit{onError()}. Auch hier gilt, dass immer nur eine der Methoden aufgerufen werden kann. Also eine erfolgreiche Datenausgabe oder eine fehlerbehaftete. Anschließend werden die Subscriptions gelöst und das Single wird beendet. Auch hier sind wieder eine Reihe von Bulk Operations möglich. 
@@ -57,7 +81,15 @@ In Listing \ref{lst:singleexample} sieht man die Verwendung eines Single-Objekts
 \section{Subject}
 Als Subject versteht man ein Objekt, dass sowohl als Observable und ebenso als Observer fungiert. Es kann an ein Observable subscriben, diese Daten verarbeiten und seinen eigenen Subscribern weiterleiten. 
 \lstinputlisting[linerange={7-14}, float=hbt, caption={Beispielverwendung eines Subjects}, label=lst:subjectexample]{../SystemMonitor/examples/subject/SubjectExample.java}
-Um das Vorgehen bei Verwendung eines Subject zu veranschaulichen betrachtet man Listing \ref{lst:subjectexample}. Es wird wieder das schon bekannte Observable-Objekt erstellt, hinzu kommt ein Subject, hier speziell eines vom Typ PublicSubject. Dieses Subject bekommt eine Subscription in welcher alle String-Werte in Großbuchstaben umgewandelt und anschließend auf der Konsole geschrieben werden. Wenn nun das Subject selbst an dem vorhandenen Observable subscribed, werden die von diesem ausgegebenen Werte gemapped und an die Subscriber des Subject weitergegeben. \newpage Zusätzlich zum PublicSubject stehen noch weitere Arten zur Verwendung bereit:
+Um das Vorgehen bei Verwendung eines Subject zu veranschaulichen betrachtet man 
+Listing \ref{lst:subjectexample}. Es wird wieder das schon bekannte 
+Observable-Objekt erstellt, hinzu kommt ein Subject, hier speziell eines vom Typ 
+PublicSubject. Dieses Subject bekommt eine Subscription in welcher alle 
+String-Werte in Großbuchstaben umgewandelt und anschließend auf der Konsole 
+geschrieben werden. Wenn nun das Subject selbst an dem vorhandenen Observable 
+subscribed, werden die von diesem ausgegebenen Werte gemapped und an die 
+Subscriber des Subject weitergegeben. Zusätzlich zum PublicSubject stehen noch 
+weitere Arten zur Verwendung bereit:
 \begin{itemize}
 	\item \underline{AsyncSubject:} Ein AsyncSubject gibt seinen Subscribern nur den letzte Wert der Quelle weiter und das auch nur falls das Quell-Observable beendet wurde. Endet es durch einen Fehler wird die Fehlermeldung direkt an die Subscriber des Subjects weiter gereicht.
 	\item \underline{BehaviorSubject:} Ein BehaviorSubject beginnt sobald es einen Subscriber verzeichnen kann mit der Übermittlung des letzten Wertes der Quelle oder mit einem Standardwert falls von der Quelle noch nichts ausgegeben wurde. Anschließend werden alle weiteren Werte weitergegeben. Auch hier wird bei Auftreten eines Fehlers die Meldung direkt durchgereicht.

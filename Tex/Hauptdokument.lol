@@ -7,12 +7,12 @@
 \contentsline {lstlisting}{\numberline {5.3}Beispiel Hot Observable}{20}{lstlisting.5.3}
 \contentsline {lstlisting}{\numberline {5.4}Beispiel Flowable mit BackPressureBuffer}{22}{lstlisting.5.4}
 \contentsline {lstlisting}{\numberline {5.5}Beispiel eines Singles}{24}{lstlisting.5.5}
-\contentsline {lstlisting}{\numberline {5.6}Beispielverwendung eines Subjects}{24}{lstlisting.5.6}
+\contentsline {lstlisting}{\numberline {5.6}Beispielverwendung eines Subjects}{25}{lstlisting.5.6}
 \contentsline {lstlisting}{\numberline {5.7}Beispielverwendung eines Processors}{26}{lstlisting.5.7}
 \contentsline {lstlisting}{\numberline {5.8}Beispiele f\IeC {\"u}r Scheduling mit zwei subscribeOn-Aufrufen}{27}{lstlisting.5.8}
-\contentsline {lstlisting}{\numberline {5.9}Beispiele f\IeC {\"u}r Scheduling mit zwei observeOn-Aufrufen}{27}{lstlisting.5.9}
-\contentsline {lstlisting}{\numberline {5.10}Beispiel Filter Operation}{28}{lstlisting.5.10}
-\contentsline {lstlisting}{\numberline {5.11}Beispiel Map Operation}{29}{lstlisting.5.11}
+\contentsline {lstlisting}{\numberline {5.9}Beispiele f\IeC {\"u}r Scheduling mit zwei observeOn-Aufrufen}{28}{lstlisting.5.9}
+\contentsline {lstlisting}{\numberline {5.10}Beispiel Filter Operation}{29}{lstlisting.5.10}
+\contentsline {lstlisting}{\numberline {5.11}Beispiel Map Operation}{30}{lstlisting.5.11}
 \contentsline {lstlisting}{\numberline {5.12}Beispiel Merge Operation}{30}{lstlisting.5.12}
 \contentsline {lstlisting}{\numberline {5.13}Beispiel Zip Operation}{31}{lstlisting.5.13}
 \contentsline {lstlisting}{\numberline {6.1}ISystemProvider-Interface}{34}{lstlisting.6.1}
