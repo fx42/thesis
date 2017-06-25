@@ -37,7 +37,7 @@ Diese Klasse ist nach den Kriterien der Reactive Streams realisiert, was wiederu
 	\item Wenn im Datenfluss nicht mehr als 1000 Elemente auftreten, es somit als keine Chance für einen \textit{OutOfMemoryError} gibt.
 	\item Wenn GUI Events behandelt werden. Diese können durch ihr unregelmäßiges Aufkommen schlecht gepuffert werden. Außerdem ist das Auftreten meist geringfügig. Elemente in der Auftrittshäufigkeit von maximal 1000 Hz sollten zu bewältigen sein.
 	\item Wenn die Plattform keine Streams unterstützt, also die Java Version diese noch nicht bereit stellt. Grundsätzlich bringen Observables weniger Overhead mit sich.
-\end{itemize}
+\end{itemize} \newpage
 \underline{Wann sollte man Flowables nutzen:}
 \begin{itemize}
 	\item Wenn mehrere Tausende Elemente generiert werden und die Möglichkeit vorhanden ist mit der Quelle zu kommunizieren um bei fehlendem Back Pressure die Frequenz zu regeln.
@@ -57,7 +57,7 @@ In Listing \ref{lst:singleexample} sieht man die Verwendung eines Single-Objekts
 \section{Subject}
 Als Subject versteht man ein Objekt, dass sowohl als Observable und auch als Observer fungieren kann. Es kann an ein Observable subscriben, diese Daten verarbeiten und seinen eigenen Subscribern weiterleiten. 
 \lstinputlisting[linerange={7-14}, float=hbt, caption={Beispielverwendung eines Subjects}, label=lst:subjectexample]{../SystemMonitor/examples/subject/SubjectExample.java}
-Um das Vorgehen bei Verwendung eines Subject zu veranschaulichen betrachtet man Listing \ref{lst:subjectexample}. Es wird wieder das schon bekannte Observable-Objekt erstellt, hinzu kommt ein Subject, hier speziell eines vom Typ PublicSubject. Dieses Subject bekommt eine Subscription in welcher alle String-Werte in Großbuchstaben umgewandelt und anschließend auf der Konsole geschrieben werden. Wenn nun das Subject selbst an dem vorhanden Observable subscribed, werden die von diesem ausgegebenen Werte gemapped und an die Subscriber des Subject weitergegeben. Zusätzlich zum PublicSubject stehen noch drei weitere Arten zur Verwendung bereit:
+Um das Vorgehen bei Verwendung eines Subject zu veranschaulichen betrachtet man Listing \ref{lst:subjectexample}. Es wird wieder das schon bekannte Observable-Objekt erstellt, hinzu kommt ein Subject, hier speziell eines vom Typ PublicSubject. Dieses Subject bekommt eine Subscription in welcher alle String-Werte in Großbuchstaben umgewandelt und anschließend auf der Konsole geschrieben werden. Wenn nun das Subject selbst an dem vorhanden Observable subscribed, werden die von diesem ausgegebenen Werte gemapped und an die Subscriber des Subject weitergegeben. \newpage Zusätzlich zum PublicSubject stehen noch weitere Arten zur Verwendung bereit:
 \begin{itemize}
 	\item \underline{AsycSubject:} Ein AsyncSubject gibt seinen Subscribern nur den letzte Wert der Quelle weiter, und das auch nur falls das Quell-Observable beendet wurde. Endet es durch einen Fehler wird die Fehlermeldung direkt an die Subscriber des Subjects weiter gereicht.
 	\item \underline{BehaviorSubject:} Ein BehaviorSubject beginnt sobald es einen Subscriber verzeichnen kann mit der Übermittlung des letzten Wertes der Quelle, oder mit einem Standardwert falls von der Quelle noch nichts ausgegeben wurde. Anschließend werden alle weiteren Werte weitergegeben. Auch hier wird bei Auftreten einen Fehler die Meldung direkt durchgereicht.
@@ -93,10 +93,11 @@ Listing \ref{lst:subscribeon} zeigt ein Observable welches eine Operation, eine 
 	\caption{Ablauf der Threads bei Verwendung von subscribeOn und observeOn}
 \label{schedulertable}
 \end{table}
-\lstinputlisting[linerange={11-11, 31-33}, float=hbt, caption={Beispiele für Scheduling mit zwei observeOn-Aufrufen}, label=lst:observeon]{../SystemMonitor/examples/scheduling/SchedulerExample.java}
 Somit muss je nach Vorhaben und Anforderung die passende Art von Scheduling betrieben werden. 
+\lstinputlisting[linerange={11-11, 31-33}, float=hbt, caption={Beispiele für Scheduling mit zwei observeOn-Aufrufen}, label=lst:observeon]{../SystemMonitor/examples/scheduling/SchedulerExample.java}
+
 \section{Operationen}
-Es wurde schon einiges über die auf Observable anwendbaren Bulk-Operations geschrieben und in manchen Listings auch angewandt, jedoch noch nicht im einzelnen geschildert wie der genaue Ablauf einer solchen Operation stattfindet. Um die ganze Mechanik besser zu verstehen, werden folgend vier der gängigen Operationen veranschaulicht. Hierzu werden sogenannte Marble-Diagramme verwendet. Die oberer Linie stellt immer ein Observable-Stream in zeitlichem Ablauf dar, also ähnlich einem Zeitstrahl. Jedes Element, dargestellt durch die farblichen \textit{Marbles}, wird durch die mittlere Operation geführt und auf das ausgehenden Observable, am unteren Ende des Bildes ausgegeben. 
+Es wurde schon einiges über die auf Observable anwendbaren Bulk-Operations geschrieben und in manchen Listings auch angewandt, jedoch noch nicht im einzelnen geschildert wie der genaue Ablauf einer solchen Operation stattfindet. Um die ganze Mechanik besser zu verstehen, werden folgend vier der gängigen Operationen veranschaulicht. Hierzu werden sogenannte Marble-Diagramme verwendet. Die oberer Linie stellt immer ein Observable-Stream in zeitlichem Ablauf dar, also ähnlich einem Zeitstrahl. Jedes Element, dargestellt durch die farblichen \textit{Marbles}, wird durch die mittlere Operation geführt und auf das ausgehenden Observable, am unteren Ende des Bildes ausgegeben.
 \subsection{Operation filter()}
 \begin{figure}[hbt]
 	\centering
@@ -104,8 +105,8 @@ Es wurde schon einiges über die auf Observable anwendbaren Bulk-Operations gesc
 	\caption{Datenfluss Filter-Operation}
 	\label{pic:filter}
 \end{figure}
+\lstinputlisting[linerange={13-22}, float=hbt, caption={Beispiel Filter Operation}, label=lst:filterop]{../SystemMonitor/examples/operators/Ops.java}
 Wie der Name schon sagt, handelt es sich bei Filter um eine Operation die einen Ausdruck prüft, und sofern das Element gültig ist, wird es weitergeben. Verwendet wir hier der von RxJava mitgebrachte Datentyp \textit{Predicate}. Er beinhaltet eine Methode \textit{test()} zur Implementierung, welche ein boolean zurück liefert. Somit ist es möglich einfache aber auch komplexere Überprüfungen innerhalb der Filter-Operation auszuführen. Im Bild \ref{pic:filter} sieht man eine Filterung nach dem Kriterium, dass nur jedes Element, das eine Wert größer 10 repräsentiert, ausgegeben wird. Da jedes Element sequentiell überprüft wird, erhält das untere Observable immer genau dann ein Element wenn es auch zu diesem Zeitpunkt die Prüfung passiert hat. In Java-Code sieht das ganze dann aus wie in Listing \ref{lst:filterop}. Innerhalb des Predicate wird die \textit{test()}-Methode implementiert und die Prüfung ob der Wert größer 10 ist durchgeführt. 
-\lstinputlisting[linerange={13-22}, float=hbt, caption={Beispiel Filter Operation}, label=lst:filterop]{../SystemMonitor/examples/operators/Ops.java} 
 Parametriert wird das Predicate auf den Wert Integer, da nur ein Datentyp übergeben wird, Resultat is immer Datentyp boolean. Das Predicate kann natürlich auch inline als Lambda oder anonym deklariert werden.
 \subsection{Operation map()}
 Die Map-Operation gilt als Transformationsoperation. Ihre Aufgabe ist es, jeden auftretenden Wert auf einen Funktionswert abzubilden und das Resultat auszugeben. In Abbildung \ref{pic:map} sieht man auf dem ursprünglichen Observable drei auftretenden Elemente. Jedes dieser Elemente wird mit 10 multipliziert und danach an das resultierenden Observable ausgegeben. 
